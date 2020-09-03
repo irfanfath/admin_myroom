@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 
-class ListData extends Component {
+class ListDataJual extends Component {
     state = {
         post: []
     }
 
     componentDidMount(){
-        axios.get("http://irfanfath.site/myroomAPi/listproduksewa")
+        axios.get("http://irfanfath.site/myroomAPi/listproduk")
         .then((result)=>{
             this.setState({
                 post: result.data.data
@@ -30,8 +30,8 @@ class ListData extends Component {
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-header card-header-primary">
-                                        <h4 className="card-title ">Daftar Produk Disewakan</h4>
-                                        <p className="card-category">Data Produk Disewakan</p>
+                                        <h4 className="card-title ">Daftar Produk Dijual</h4>
+                                        <p className="card-category">Data Produk Dijual</p>
                                     </div>
                                     <div className="card-body">
                                         <div className="table-responsive">
@@ -75,4 +75,4 @@ class ListData extends Component {
     }
 }
 
-export default ListData
+export default ListDataJual;

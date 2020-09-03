@@ -3202,6 +3202,14 @@ tbody.collapse.show {
   border-left: 0 solid #d2d2d2;
   border-radius: 0 0 0 0;
 }
+.title-sidebar {
+  color: purple;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.title-sidebar:hover {
+  font-weight: 600;
+}
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -3212,6 +3220,7 @@ tbody.collapse.show {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 .nav-link:focus,
 .nav-link:hover {
@@ -8928,6 +8937,128 @@ fieldset[disabled][disabled] .btn.btn-raised {
   top: 0;
   transform: scale3d(2.3, 2.3, 1);
 }
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.Neon {
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #494949;
+  position: relative;
+}
+.Neon * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.Neon-input-dragDrop {
+  display: block;
+  width: 343px;
+  margin: 0 auto 25px auto;
+  padding: 25px;
+  color: #8d9499;
+  color: #97A1A8;
+  background: #fff;
+  border: 2px dashed #C8CBCE;
+  text-align: center;
+  -webkit-transition: box-shadow 0.3s, border-color 0.3s;
+  -moz-transition: box-shadow 0.3s, border-color 0.3s;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.Neon-input-dragDrop .Neon-input-icon {
+  font-size: 48px;
+  margin-top: -10px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.Neon-input-text h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.Neon-input-text span {
+  font-size: 12px;
+}
+.Neon-input-choose-btn.blue {
+  color: #008BFF;
+  border: 1px solid #008BFF;
+}
+.Neon-input-choose-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8d9496;
+  border-radius: 3px;
+  border: 1px solid #c6c6c6;
+  vertical-align: middle;
+  background-color: #fff;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.05);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
 .form-check .form-check-sign .check {
   position: relative;
   display: inline-block;
@@ -8938,6 +9069,7 @@ fieldset[disabled][disabled] .btn.btn-raised {
   z-index: 1;
   border-radius: 3px;
 }
+
 .form-check .form-check-sign .check:before {
   position: absolute;
   content: "";
