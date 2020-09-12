@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Sidebar from "../Component/Navigation/Sidebar";
-import Header from "../Component/Navigation/Header";
+import Sidebar from "../../Component/Navigation/Sidebar";
+import Header from "../../Component/Navigation/Header";
  
-class Home extends Component {
+class ListSewa extends Component {
     state = {
         post: []
     }
@@ -50,4 +50,4 @@ class Home extends Component {
   }
 }
  
-export default Home;
+export default ListSewa;
