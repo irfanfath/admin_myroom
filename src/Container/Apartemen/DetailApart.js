@@ -62,7 +62,7 @@ export default class DetailApart extends Component {
                             </div> */}
                         </div>
                         <div className="author-column w-col w-col-4">
-                        <div className="images">
+                            <div className="images">
                                 <img
                                     className="big-image"
                                     sizes="(max-width: 767px) 96vw, (max-width: 991px) 478.65625px, 619.984375px"
@@ -70,6 +70,12 @@ export default class DetailApart extends Component {
                                     src={this.state.post.image}
                                 />
                                 <div className="image-text">Here's some text about this photo.</div>
+                            </div>
+                            <div className="button-action-detail">
+                                <input className="button w-button" type="submit" value="Edit" />
+                            </div>
+                            <div className="button-action-detail">
+                                <input className="button w-button" type="submit" value="Hapus" />
                             </div>
                         </div>
                     </div>

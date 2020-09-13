@@ -2257,6 +2257,11 @@ p {
   text-align: left;
 }
 
+.button-action-detail {
+  display: inline-flex;
+  margin-left: 5%;
+}
+
 .share-article-wrapper {
   margin-top: 42px;
   padding-top: 22px;

@@ -24,12 +24,17 @@ class Unit extends Component {
         })
     }
 
+    handleMoveAdd = () => {
+        this.props.history.push("/addunit")
+    }
+
   render() {
     return (
         <div className="all-content w-clearfix">
             <Sidebar/>
             <div className="content main-column">
                 <Header/>
+                <input className="button w-button" type="submit" value="Tambah Unit Baru" onClick={this.handleMoveAdd} />
                 {
                     this.state.post.map((data, key)=>
                     <div className="article w-clearfix w-inline-block" key={key}>

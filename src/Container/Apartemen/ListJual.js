@@ -25,12 +25,17 @@ class ListJual extends Component {
         window.open(`#/detailapart/${id}`, "_blank")
     } 
 
+    handleMoveAdd = () => {
+        this.props.history.push("/addapart")
+    }
+
   render() {
     return (
         <div className="all-content w-clearfix">
             <Sidebar/>
             <div className="content main-column">
                 <Header/>
+                <input className="button w-button" type="submit" value="Tambah Apartemen Baru" onClick={this.handleMoveAdd} />
                 {
                     this.state.post.map((data, key)=>
                     <div className="article w-clearfix w-inline-block" key={key} onClick={() => this.handleMoveDetail(data.id)}>

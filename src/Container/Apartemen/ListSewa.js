@@ -8,12 +8,23 @@ class ListSewa extends Component {
         post: []
     }
 
-    componentDidMount(){
+    getPostApi = () => {
         axios.get("https://cooperative-express.herokuapp.com/apartments")
         .then((result)=>{
             this.setState({
                 post: result.data
             })
+        }) 
+    }
+
+    componentDidMount(){
+        this.getPostApi()
+    }
+
+    handleRemove = (id) => {
+        axios.delete(`https://cooperative-express.herokuapp.com/apartments/${id}`)
+        .then((result)=>{
+            this.getPostApi()
         }) 
     }
 
@@ -25,12 +36,17 @@ class ListSewa extends Component {
         window.open(`#/detailapart/${id}`, "_blank")
     } 
 
+    handleMoveAdd = () => {
+        this.props.history.push("/addapart")
+    }
+
   render() {
     return (
         <div className="all-content w-clearfix">
             <Sidebar/>
             <div className="content main-column">
                 <Header/>
+                <input className="button w-button" type="submit" value="Tambah Apartemen Baru" onClick={this.handleMoveAdd} />
                 {
                     this.state.post.map((data, key)=>
                     <div className="article w-clearfix w-inline-block" key={key} onClick={() => this.handleMoveDetail(data.id)}>
@@ -40,6 +56,8 @@ class ListSewa extends Component {
                             <h2 className="thumbnail-title">{data.name}s</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.&nbsp;</p>
                             <input className="button w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/>
+                            <input className="button w-button" type="submit" value="Hapus Apartemen" onClick={() => this.handleRemove(data.id)}/>
+
                         </section>
                     </div>
                     )
