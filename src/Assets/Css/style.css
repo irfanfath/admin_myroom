@@ -2084,13 +2084,19 @@ p {
 }
 
 .field.first {
-  width: 48%;
+  width: 31%;
   margin-right: 3%;
   float: left;
 }
 
+.field.mid {
+  width: 31%;
+  float: left;
+  margin-right: 3%;
+}
+
 .field.last {
-  width: 49%;
+  width: 31%;
   float: left;
 }
 

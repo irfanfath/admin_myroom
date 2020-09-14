@@ -12,6 +12,8 @@ import ListSewa from "./Container/Apartemen/ListSewa";
 import ListJual from "./Container/Apartemen/ListJual";
 import Login from "./Container/Login";
 import EditApart from "./Container/Apartemen/EditApart";
+import Facility from "./Container/Facility";
+import Feature from "./Container/Feature";
 
 class Main extends Component {
     render(){
@@ -26,6 +28,8 @@ class Main extends Component {
                     <Route path="/editapart" component={EditApart}/>
                     <Route path="/detailapart/:idApart" component={DetailApart}/>
                     <Route path="/location" component={Location}/>
+                    <Route path="/facility" component={Facility}/>
+                    <Route path="/feature" component={Feature}/>
                     <Route path="/unit/:idApart" component={Unit}/>
                     <Route path="/detailunit" component={DetailUnit}/>
                     <Route path="/addunit" component={AddUnit}/>

@@ -13,7 +13,7 @@ class UploadImg extends React.Component {
   }
 
   render() {
-    const label = this.state.file? this.state.file.name : 'Click or drop your file here';
+    const label = this.state.file? this.state.file.name : 'Klik atau drop gambar yang akan dimasukan disini';
     return (
       <div>
         <StyledDropZone onDrop={this.setFile}>{label}</StyledDropZone>
