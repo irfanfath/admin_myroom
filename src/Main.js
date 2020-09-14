@@ -11,6 +11,7 @@ import Unit from "./Container/Unit/Unit";
 import ListSewa from "./Container/Apartemen/ListSewa";
 import ListJual from "./Container/Apartemen/ListJual";
 import Login from "./Container/Login";
+import EditApart from "./Container/Apartemen/EditApart";
 
 class Main extends Component {
     render(){
@@ -22,6 +23,7 @@ class Main extends Component {
                     <Route path="/listsewa" component={ListSewa}/>
                     <Route path="/listjual" component={ListJual}/>
                     <Route path="/addapart" component={AddApart}/>
+                    <Route path="/editapart" component={EditApart}/>
                     <Route path="/detailapart/:idApart" component={DetailApart}/>
                     <Route path="/location" component={Location}/>
                     <Route path="/unit/:idApart" component={Unit}/>

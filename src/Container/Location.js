@@ -6,27 +6,32 @@ import Header from "../Component/Navigation/Header";
 class Location extends Component {
     constructor(props){
         super(props)
-
-        this.state = {
-            post: [],
-            name: ""
-        }
+            this.state = {
+                post: [],
+                name: ""
+            }
     }
 
     componentDidMount(){
+        this.getPostApi()
+    }
+
+    getPostApi = () => {
         axios.get("https://cooperative-express.herokuapp.com/locations")
         .then((result)=>{
             this.setState({
                 post: result.data
             })
-        }) 
+        })
     }
 
     handleSubmit = () => {
-        const data = new FormData()
-
-        data.append("name", this.state.name)
-
+        // const data = new FormData()
+        const payload = {
+            "name" : this.state.name
+        }
+        const data = payload
+        // data.append("name", this.state.name)
         axios.post("https://cooperative-express.herokuapp.com/locations", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -35,12 +40,30 @@ class Location extends Component {
             }
         }).then((res) => {
             console.log(res)
-            if(res.status === 200){
+            if(res.status === 201){
                 alert("berhasil menambahkan data")
             }else {
                 alert("gagal menambahkan data")
             }
+            this.getPostApi()
         })
+    }
+
+    handleRemove = (id) => {
+        axios.delete(`https://cooperative-express.herokuapp.com/locations/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then((result)=>{
+            if(result.status === 200){
+                alert("berhasil menghapus data")
+            }else {
+                alert("gagal menghapus data")
+            }
+            this.getPostApi()
+        }) 
     }
 
   render() {
@@ -63,6 +86,7 @@ class Location extends Component {
                     <div className="location w-clearfix w-inline-block" key={key}>
                         <section className="article-text-wrapper w-clearfix">
                             <h4 className="thumbnail-title">{data.name}</h4>
+                            <input className="button w-button" type="submit" value="Hapus Lokasi" onClick={() => this.handleRemove(data.id)}/>
                         </section>
                     </div>
                     )

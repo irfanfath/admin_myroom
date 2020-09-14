@@ -36,6 +36,10 @@ class ListSewa extends Component {
         window.open(`#/detailapart/${id}`, "_blank")
     } 
 
+    handleMoveEdit = (id) => {
+        window.open(`#/editapart/${id}`, "_blank")
+    }
+
     handleMoveAdd = () => {
         this.props.history.push("/addapart")
     }
@@ -56,8 +60,8 @@ class ListSewa extends Component {
                             <h2 className="thumbnail-title">{data.name}s</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.&nbsp;</p>
                             <input className="button w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/>
-                            <input className="button w-button" type="submit" value="Hapus Apartemen" onClick={() => this.handleRemove(data.id)}/>
-
+                            <input className="button-edit w-button" type="submit" value="Edit Data" onClick={() => this.handleMoveEdit(data.id)}/>
+                            <input className="button-hapus w-button" type="submit" value="Hapus Apartemen" onClick={() => this.handleRemove(data.id)}/>
                         </section>
                     </div>
                     )

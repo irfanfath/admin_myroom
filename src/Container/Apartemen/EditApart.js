@@ -4,10 +4,9 @@ import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
 import UploadImg from "../../Component/Form/UploadImg";
 
-export default class AddApart extends Component{
+export default class EditApart extends Component{
     constructor(props){
         super(props)
-            this.onSubmit = this.onSubmit.bind(this);
             this.state = {
                 post: [],
                 name: "",
@@ -58,10 +57,6 @@ export default class AddApart extends Component{
             this.getPostApi()
         })
     }
-
-    onSubmit() {
-        console.log(this.state.LocationId);
-    }
     
     render(){
         return(
@@ -70,8 +65,8 @@ export default class AddApart extends Component{
                 <div className="content main-column">
                     <Header/>
                     <div className="section">
-                        <h1>Tambah Apartemen Baru</h1>
-                        <p>Halaman ini untuk menambahkan apartemen baru yang akan disewakan</p>
+                        <h1>Edit Data Apartemen</h1>
+                        <p>Halaman ini untuk merubah data apartemen yang akan disewakan</p>
                         <div className="form-wrapper w-form">
                             <div>
                                 <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
@@ -82,19 +77,14 @@ export default class AddApart extends Component{
                                         this.state.post.map((data,key) => {
                                             return (
                                                 <div className="margin-radio" key={key}>
-                                                    <input type="checkbox" value={data.id} name="lokasi" className="radio-menu-lokasi" onChange={(e) => this.setState({LocationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
+                                                    <input type="radio" value={data.id} name="lokasi" className="radio-menu-lokasi" onChange={(e) => this.setState({LocationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
                                                 </div> 
                                             )
                                         })
                                     }
-                                     <button type="button" onClick={this.onSubmit} className="btn">Save</button>
                                 </div>
-                                <label htmlFor="layanan">List Gambar</label>
                                 <UploadImg/>
-                                <div className="lokasi-menu-list">
-                                    <label htmlFor="layanan">Gambar Utama</label>
-                                    <input className="field w-input" name="gambar" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
-                                </div>
+                                <input className="field w-input" name="gambar" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Tambah Apartemen" onClick={this.handleSubmit} />
                             </div>

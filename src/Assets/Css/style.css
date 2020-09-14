@@ -1752,7 +1752,44 @@ p {
 }
 
 .button:hover {
-  background-color: #0050b8;
+  background-color: gray;
+}
+
+.button-hapus {
+  display: inline-block;
+  padding: 10px 23px;
+  background-color: red;
+  -webkit-transition: background-color 250ms ease;
+  transition: background-color 250ms ease;
+  font-family: "Roboto Condensed", sans-serif;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.button-hapus:hover {
+  background-color: #6b0000;
+}
+.button-edit {
+  display: inline-block;
+  padding: 10px 23px;
+  background-color: blue;
+  -webkit-transition: background-color 250ms ease;
+  transition: background-color 250ms ease;
+  font-family: "Roboto Condensed", sans-serif;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.button-edit:hover {
+  background-color: #040433;
 }
 
 .button.blue {
@@ -1761,6 +1798,22 @@ p {
 
 .button.blue:hover {
   background-color: #000;
+}
+
+.lokasi-menu-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.margin-radio {
+  margin-left: 20px;
+  display: inline-flex;
+}
+.radio-menu-lokasi {
+  display: inline-flex;
+}
+
+.title-radio-lokasi {
+  margin-left: 10px;
 }
 
 .tagline {
