@@ -26,7 +26,7 @@ export default class Login extends Component{
               // localStorage.setItem("nameUser", res.data.data.firstName)
               localStorage.setItem('session', "active");
               this.setState({token: res.data.access_token})
-              this.props.history.push("/home")
+              this.props.history.push("/")
           }else{
             alert("username atau password anda salah")
           }
@@ -36,9 +36,6 @@ export default class Login extends Component{
         });      
     }
 
-    handleMove = () => {
-        this.props.history.push("/")
-    }
     render(){
         return(
             <div className="all-content w-clearfix">
