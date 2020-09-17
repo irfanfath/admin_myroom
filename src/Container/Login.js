@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Sidebar from "../Component/Navigation/Sidebar";
 import axios from "axios"
 
 export default class Login extends Component{
@@ -39,7 +38,9 @@ export default class Login extends Component{
     render(){
         return(
             <div className="all-content w-clearfix">
-                <Sidebar/>
+                <header className="header main-column">
+                    <h1 className="logo">IsMyRoom</h1>
+                </header>
                 <div className="content main-column">
                     <div className="section">
                         <h1>Login</h1>
