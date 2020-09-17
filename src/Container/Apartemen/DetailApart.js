@@ -3,22 +3,23 @@ import axios from "axios";
 
 export default class DetailApart extends Component {
     state = {
-        post: []
+        post: [],
+        postLoc: []
     }
 
     componentDidMount(){
         let id = this.props.match.params.idApart
-        axios.get(`https://cooperative-express.herokuapp.com/apartments/${id}`)
+        axios.get(`https://api.ismyroom.com/apartments/${id}`)
         .then((result)=>{
             this.setState({
-                post: result.data
+                post: result.data,
+                postLoc : result.data.location
             })
-            console.log(result.data)
         }) 
     }
 
     handleRemove = (id) => {
-        axios.delete(`https://cooperative-express.herokuapp.com/apartments/${id}`)
+        axios.delete(`https://api.ismyroom.com/apartments/${id}`)
         .then((result)=>{
             this.getPostApi()
         }) 
@@ -40,11 +41,8 @@ export default class DetailApart extends Component {
                                 {this.state.post.description}
                             </p>
                             <h2>Fasilitas</h2>
-
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
-                                Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique
-                                posuere.
+                                {this.state.post.facility}
                             </p>
                             {/* <h2>List Image</h2>
                             <div className="images">
@@ -80,7 +78,7 @@ export default class DetailApart extends Component {
                                     alt=""
                                     src={this.state.post.image}
                                 />
-                                <div className="image-text">Here's some text about this photo.</div>
+                                <div className="image-text">{this.state.postLoc.name}</div>
                             </div>
                             <div className="button-action-detail">
                                 <input className="button w-button" type="submit" value="Edit" onClick={() => this.handleMoveEdit(this.state.post.id)} />

@@ -70,8 +70,7 @@ export default class AddApart extends Component{
     //     axios.post("https://api.ismyroom.com/apartments", data, {
     //         headers: {
     //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             Accept: "application/json",
-    //             "Content-Type": "application/json"
+    //             "Content-Type": "multipart/form-data"
     //         }
     //     }).then((res) => {
     //         console.log(res)
@@ -80,7 +79,9 @@ export default class AddApart extends Component{
     //         }else {
     //             alert("gagal menambahkan data")
     //         }
-    //     })
+    //     }).catch(error => {
+    //         console.error(error.message);
+    //       });
     // }
 
     onSubmit() {

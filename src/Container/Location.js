@@ -4,12 +4,16 @@ import Sidebar from "../Component/Navigation/Sidebar";
 import Header from "../Component/Navigation/Header";
  
 class Location extends Component {
-    constructor(props){
-        super(props)
-            this.state = {
-                post: [],
-                name: ""
-            }
+    // constructor(props){
+    //     super(props)
+    //         this.state = {
+    //             post: [],
+    //             name: ""
+    //         }
+    // }
+    state = {
+        post: [],
+        name: ""
     }
 
     componentDidMount(){
@@ -17,7 +21,7 @@ class Location extends Component {
     }
 
     getPostApi = () => {
-        axios.get("https://cooperative-express.herokuapp.com/locations")
+        axios.get("https://api.ismyroom.com/locations")
         .then((result)=>{
             this.setState({
                 post: result.data
@@ -26,13 +30,11 @@ class Location extends Component {
     }
 
     handleSubmit = () => {
-        // const data = new FormData()
         const payload = {
             "name" : this.state.name
         }
         const data = payload
-        // data.append("name", this.state.name)
-        axios.post("https://cooperative-express.herokuapp.com/locations", data, {
+        axios.post("https://api.ismyroom.com/locations", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -50,14 +52,14 @@ class Location extends Component {
     }
 
     handleRemove = (id) => {
-        axios.delete(`https://cooperative-express.herokuapp.com/locations/${id}`, {
+        axios.delete(`https://api.ismyroom.com/locations/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
                 "Content-Type": "application/json"
             }
-        }).then((result)=>{
-            if(result.status === 200){
+        }).then((res)=>{
+            if(res.status === 200){
                 alert("berhasil menghapus data")
             }else {
                 alert("gagal menghapus data")
@@ -71,7 +73,7 @@ class Location extends Component {
     //         "name" : this.state.name
     //     }
     //     const data = payload
-    //     axios.put(`https://cooperative-express.herokuapp.com/locations/${id}`, data, {
+    //     axios.put(`https://api.ismyroom.com/locations/${id}`, data, {
     //         headers: {
     //             Authorization: `Bearer ${localStorage.getItem("token")}`,
     //             Accept: "application/json",
@@ -80,9 +82,9 @@ class Location extends Component {
     //     }).then((res) => {
     //         console.log(res)
     //         if(res.status === 200){
-    //             alert("berhasil menambahkan data")
+    //             alert("berhasil memperbarui data")
     //         }else {
-    //             alert("gagal menambahkan data")
+    //             alert("gagal memperbarui data")
     //         }
     //         this.getPostApi()
     //     })
@@ -106,11 +108,12 @@ class Location extends Component {
                 {
                     this.state.post.map((data, key)=>
                     <div className="location w-clearfix w-inline-block" key={key}>
-                        <section className="article-text-wrapper w-clearfix">
+                        <section className="article-text-wrapper">
                             <h4 className="thumbnail-title">{data.name}</h4>
-                            <input className="button w-button" type="submit" value="Hapus Lokasi" onClick={() => this.handleRemove(data.id)}/>
-                            {/* <input className="field w-input" name="lokasi" placeholder="Nama Lokasi Baru" defaultValue={data.name} required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} /> */}
-                            {/* <input className="button w-button" type="submit" value="Update Lokasi" onClick={() => this.handleUpdate(data.id)} /> */}
+                            <div className="article-info-delete tag"  onClick={() => this.handleRemove(data.id)}>Hapus Lokasi</div>
+                            {/* <input className="button w-button" type="submit" value="Hapus Lokasi" onClick={() => this.handleRemove(data.id)}/> */}
+                            {/* <input className="field w-input" name="lokasi" placeholder="Nama Lokasi Baru" defaultValue={data.name} required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
+                            <input className="button w-button" type="submit" value="Update Lokasi" onClick={() => this.handleUpdate(data.id)} /> */}
                         </section>
                     </div>
                     )

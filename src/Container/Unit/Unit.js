@@ -13,19 +13,24 @@ class Unit extends Component {
             filtered: this.state.post
         });
         let id = this.props.match.params.idApart
-        axios.get(`https://cooperative-express.herokuapp.com/units/`)
+        axios.get(`https://api.ismyroom.com/units?filter=rent`)
         .then((res) =>{
             const arrData = res.data
             for (let i = 0; i < arrData.length; i++) {
-                if(arrData[i].ApartmentId === parseInt(id)){
+                if(arrData[i].apartmentId === parseInt(id)){
                     this.setState({post: [...this.state.post, arrData[i]]})
                 }
             }
+            console.log(this.state.post)
         })
     }
 
     handleMoveAdd = () => {
         this.props.history.push("/addunit")
+    }
+
+    handleDetail = () => {
+        this.props.history.push("/detailunit")
     }
 
   render() {
@@ -37,16 +42,16 @@ class Unit extends Component {
                 <input className="button w-button" type="submit" value="Tambah Unit Baru" onClick={this.handleMoveAdd} />
                 {
                     this.state.post.map((data, key)=>
-                    <div className="article w-clearfix w-inline-block" key={key}>
+                    <div className="article w-clearfix w-inline-block" key={key} onClick={() => this.handleDetail(data.id)}>
                         <div className="image-wrapper"><img className="thumbnail" src="http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f320b1593f6edf41000793_thumb11.jpg" alt="" width="109" /></div>
                         <section className="article-text-wrapper w-clearfix">
                             <h2 className="arrow">❯</h2>
                             <h2 className="thumbnail-title">{data.name}</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.&nbsp;</p>
                             <div className="article-info-wrapper">
-                                <div className="article-info-text">March 2, 2014</div>
-                                <div className="article-info-text tag">Camera</div>
-                                <div className="article-info-text tag">Nature</div>
+                                <div className="article-info-text">{data.unitCode}</div>
+                                <div className="article-info-text tag">Edit</div>
+                                <div className="article-info-text tag">Hapus</div>
                             </div>
                         </section>
                     </div>

@@ -14,6 +14,9 @@ import Login from "./Container/Login";
 import EditApart from "./Container/Apartemen/EditApart";
 import Facility from "./Container/Facility";
 import Feature from "./Container/Feature";
+import Profile from "./Container/Profile";
+import Testimoni from "./Container/Testimoni";
+import ListTestimoni from "./Container/ListTestimoni";
 
 class Main extends Component {
     render(){
@@ -22,6 +25,9 @@ class Main extends Component {
                 {/* <DynamicScrollToTop/> */}
                     <Route exact path="/" component={Home}/>
                     <Route path="/login" component={Login}/>
+                    <Route path="/profile" component={Profile}/>
+                    <Route path="/listtestimoni" component={ListTestimoni}/>
+                    <Route path="/testimoni" component={Testimoni}/>
                     <Route path="/listsewa" component={ListSewa}/>
                     <Route path="/listjual" component={ListJual}/>
                     <Route path="/addapart" component={AddApart}/>

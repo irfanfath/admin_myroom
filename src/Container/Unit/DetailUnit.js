@@ -66,6 +66,12 @@ export default class DetailUnit extends Component {
                                 <div className="image-text">Here's some text about this photo.</div>
                             </div>
                         </div>
+                        <div className="button-action-detail">
+                                <input className="button w-button" type="submit" value="Edit" onClick={() => this.handleMoveEdit(this.state.post.id)} />
+                            </div>
+                            <div className="button-action-detail">
+                                <input className="button w-button" type="submit" value="Hapus" onClick={() => this.handleRemove(this.state.post.id)} />
+                            </div>
                     </div>
                 </div>
             </div>

@@ -86,7 +86,7 @@ class Feature extends Component {
                     <div className="location w-clearfix w-inline-block" key={key}>
                         <section className="article-text-wrapper w-clearfix">
                             <h4 className="thumbnail-title">{data.name}</h4>
-                            <input className="button w-button" type="submit" value="Hapus Lokasi" onClick={() => this.handleRemove(data.id)}/>
+                            <div className="article-info-delete tag"  onClick={() => this.handleRemove(data.id)}>Hapus Kelengkapan Unit</div>
                         </section>
                     </div>
                     )

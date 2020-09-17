@@ -2058,6 +2058,25 @@ p {
   cursor: pointer;
 }
 
+.article-info-delete.tag {
+  display: inline-block;
+  padding: 4px 7px;
+  border: 1px solid green;
+  color: green;
+  border-radius: 30px;
+  text-transform: none;
+  float: right;
+  font-size: 12px;
+  line-height: 10px;
+  margin-top: -30px;
+}
+
+.article-info-delete.tag:hover {
+  color: white;
+  background-color: green;
+  cursor: pointer;
+}
+
 .pagination-nav {
   position: relative;
   z-index: 1;
