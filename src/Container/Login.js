@@ -9,6 +9,15 @@ export default class Login extends Component{
         failLogin: false
     }
 
+    componentDidMount(){
+        const session = localStorage.getItem('session')
+        if (session !== "active"){
+            alert("Silahkan Login Terlebih Dahulu")
+        } else (
+            this.props.history.push("/")
+        )
+    }
+
     handlePostLogin = (username, password) => {
         // this.setState({
         //   showLoader: true
