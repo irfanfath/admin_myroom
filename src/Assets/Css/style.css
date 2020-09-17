@@ -2039,7 +2039,7 @@ p {
   display: inline-block;
   margin-right: 6px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  color: rgba(0, 0, 0, 0.34);
+  color: green;
   font-size: 12px;
   line-height: 10px;
 }
@@ -2047,9 +2047,15 @@ p {
 .article-info-text.tag {
   display: inline-block;
   padding: 4px 7px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
+  border: 1px solid green;
   border-radius: 30px;
   text-transform: none;
+}
+
+.article-info-text.tag:hover {
+  color: white;
+  background-color: green;
+  cursor: pointer;
 }
 
 .pagination-nav {

@@ -6,14 +6,14 @@ import axios from "axios";
 export default class AddApart extends Component{
     constructor(props){
         super(props)
-            this.onSubmit = this.onSubmit.bind(this);
+
             this.state = {
                 post: [],
                 name: "",
                 description: "",
                 facility: "",
                 image: null,
-                LocationId: ""
+                locationId: ""
             }
     }
 
@@ -31,25 +31,25 @@ export default class AddApart extends Component{
     }
 
     handleSubmit = () => {
-        // const data = new FormData()
         const payload = {
             "name" : this.state.name,
             "description" : this.state.description,
             "facility" : this.state.facility,
             "image" : this.state.image,
-            "LocationId" : this.state.LocationId
+            "locationId" : this.state.locationId
         }
+        // const imageData = new FormData()
+        // imageData.append("image", this.state.image)
         const data = payload
-        // data.append("name", this.state.name)
-        axios.post("https://cooperative-express.herokuapp.com/apartments", data, {
+        axios.post("https://api.ismyroom.com/apartments", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
-                "Content-Type": "application/json"
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             }
         }).then((res) => {
             console.log(res)
-            if(res.status === 200){
+            if(res.status === 201){
                 alert("berhasil menambahkan data")
             }else {
                 alert("gagal menambahkan data")
@@ -57,6 +57,31 @@ export default class AddApart extends Component{
             this.getPostApi()
         })
     }
+
+    // handleSubmit = () => {
+    //     const data = new FormData()
+
+    //     data.append("name", this.state.name)
+    //     data.append("description", this.state.description)
+    //     data.append("facility", this.state.facility)
+    //     data.append("locationId", this.state.locationId)
+    //     data.append("image", this.state.image)
+
+    //     axios.post("https://api.ismyroom.com/apartments", data, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then((res) => {
+    //         console.log(res)
+    //         if(res.status === 200){
+    //             alert("berhasil menambahkan data")
+    //         }else {
+    //             alert("gagal menambahkan data")
+    //         }
+    //     })
+    // }
 
     onSubmit() {
         console.log(this.state.LocationId);
@@ -81,13 +106,14 @@ export default class AddApart extends Component{
                                         this.state.post.map((data,key) => {
                                             return (
                                                 <div className="margin-radio" key={key}>
-                                                    <input type="checkbox" value={data.id} name="LocationId" className="radio-menu-lokasi" onChange={(e) => this.setState({LocationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
+                                                    <input type="radio" value={data.id} name="locationId" className="radio-menu-lokasi" onChange={(e) => this.setState({locationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
                                                 </div> 
                                             )
                                         })
                                     }
                                      <button type="button" onClick={this.onSubmit} className="btn">Save</button>
                                 </div>
+                                {/* <input className="field w-input" name="gambar" placeholder="Gambar" required="required" type="text" onChange={(e) => this.setState({image: e.target.value})}/> */}
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>
                                     <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />

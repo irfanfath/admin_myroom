@@ -66,6 +66,28 @@ class Location extends Component {
         }) 
     }
 
+    // handleUpdate = (id) => {
+    //     const payload = {
+    //         "name" : this.state.name
+    //     }
+    //     const data = payload
+    //     axios.put(`https://cooperative-express.herokuapp.com/locations/${id}`, data, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then((res) => {
+    //         console.log(res)
+    //         if(res.status === 200){
+    //             alert("berhasil menambahkan data")
+    //         }else {
+    //             alert("gagal menambahkan data")
+    //         }
+    //         this.getPostApi()
+    //     })
+    // }
+
   render() {
     return (
         <div className="all-content w-clearfix">
@@ -87,6 +109,8 @@ class Location extends Component {
                         <section className="article-text-wrapper w-clearfix">
                             <h4 className="thumbnail-title">{data.name}</h4>
                             <input className="button w-button" type="submit" value="Hapus Lokasi" onClick={() => this.handleRemove(data.id)}/>
+                            {/* <input className="field w-input" name="lokasi" placeholder="Nama Lokasi Baru" defaultValue={data.name} required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} /> */}
+                            {/* <input className="button w-button" type="submit" value="Update Lokasi" onClick={() => this.handleUpdate(data.id)} /> */}
                         </section>
                     </div>
                     )

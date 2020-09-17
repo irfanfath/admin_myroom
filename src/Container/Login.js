@@ -18,7 +18,7 @@ export default class Login extends Component{
           "username" : username,
           "password": password
         }
-        axios.post('https://cooperative-express.herokuapp.com/users/login', data)
+        axios.post('https://api.ismyroom.com/users/login', data)
         .then((res) => {
             console.log(res)
           if(res.data.message === "Login success"){
@@ -37,7 +37,7 @@ export default class Login extends Component{
     }
 
     handleMove = () => {
-        this.props.history.push("/home")
+        this.props.history.push("/")
     }
     render(){
         return(

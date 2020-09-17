@@ -20,8 +20,8 @@ class Main extends Component {
         return(
             <HashRouter>
                 {/* <DynamicScrollToTop/> */}
-                    <Route exact path="/" component={Login}/>
-                    <Route path="/home" component={Home}/>
+                    <Route exact path="/" component={Home}/>
+                    <Route path="/login" component={Login}/>
                     <Route path="/listsewa" component={ListSewa}/>
                     <Route path="/listjual" component={ListJual}/>
                     <Route path="/addapart" component={AddApart}/>

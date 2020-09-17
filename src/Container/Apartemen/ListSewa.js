@@ -9,7 +9,7 @@ class ListSewa extends Component {
     }
 
     getPostApi = () => {
-        axios.get("https://cooperative-express.herokuapp.com/apartments")
+        axios.get("https://api.ismyroom.com/apartments")
         .then((result)=>{
             this.setState({
                 post: result.data
@@ -59,9 +59,15 @@ class ListSewa extends Component {
                             <h2 className="arrow">❯</h2>
                             <h2 className="thumbnail-title">{data.name}s</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.&nbsp;</p>
-                            <input className="button w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/>
+                            <div className="article-info-wrapper">
+                                {/* <div className="article-info-text tag" onClick={() => this.handleMoveListUnit(data.id)}>List Unit</div>
+                                <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)}>Edit Apartemen</div>
+                                <div className="article-info-text tag" onClick={() => this.handleRemove(data.id)}>Hapus Apartemen</div> */}
+                                <input className="button-edit w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/>
+                            </div>
+                            {/* <input className="button w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/>
                             <input className="button-edit w-button" type="submit" value="Edit Data" onClick={() => this.handleMoveEdit(data.id)}/>
-                            <input className="button-hapus w-button" type="submit" value="Hapus Apartemen" onClick={() => this.handleRemove(data.id)}/>
+                            <input className="button-hapus w-button" type="submit" value="Hapus Apartemen" onClick={() => this.handleRemove(data.id)}/> */}
                         </section>
                     </div>
                     )

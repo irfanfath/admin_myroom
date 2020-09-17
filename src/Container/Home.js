@@ -18,7 +18,7 @@ class Home extends Component {
     componentDidMount(){
         const session = localStorage.getItem('session')
         if (session !== "active"){
-            this.props.history.push("/")
+            this.props.history.push("/login")
         } else (
             this.handleGetAPI()
         )

@@ -17,6 +17,17 @@ export default class DetailApart extends Component {
         }) 
     }
 
+    handleRemove = (id) => {
+        axios.delete(`https://cooperative-express.herokuapp.com/apartments/${id}`)
+        .then((result)=>{
+            this.getPostApi()
+        }) 
+    }
+
+    handleMoveEdit = (id) => {
+        window.open(`#/editapart/${id}`, "_blank")
+    }
+
     render(){
         return(
             <div className="content-section">
@@ -72,10 +83,10 @@ export default class DetailApart extends Component {
                                 <div className="image-text">Here's some text about this photo.</div>
                             </div>
                             <div className="button-action-detail">
-                                <input className="button w-button" type="submit" value="Edit" />
+                                <input className="button w-button" type="submit" value="Edit" onClick={() => this.handleMoveEdit(this.state.post.id)} />
                             </div>
                             <div className="button-action-detail">
-                                <input className="button w-button" type="submit" value="Hapus" />
+                                <input className="button w-button" type="submit" value="Hapus" onClick={() => this.handleRemove(this.state.post.id)} />
                             </div>
                         </div>
                     </div>

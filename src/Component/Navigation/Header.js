@@ -6,8 +6,7 @@ export default class Header extends Component {
         return(
             <nav className="navbar w-nav" data-animation="default" data-collapse="small" data-duration="400">
                 <nav className="nav-menu w-nav-menu" role="navigation">
-                    <NavLink to="/listsewa" className="nav-link w-nav-link">Disewakan</NavLink>
-                    <NavLink to="/listjual" className="nav-link w-nav-link">Dijual   </NavLink>
+                    <NavLink to="/listsewa" className="nav-link w-nav-link">List Apartement</NavLink>
                     <NavLink to="/location" className="nav-link w-nav-link">Lokasi</NavLink>
                     <NavLink to="/facility" className="nav-link w-nav-link">Fasilitas</NavLink>
                     <NavLink to="/feature" className="nav-link w-nav-link">Fitur Unit</NavLink>
