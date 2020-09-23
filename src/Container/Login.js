@@ -57,7 +57,7 @@ export default class Login extends Component{
                         <div className="form-wrapper w-form">
                             <div>
                                 <input className="field w-input first" name="username" placeholder="Username" required="required" type="text" onChange={(e) => this.setState({username: e.target.value})} />
-                                <input className="field w-input last" name="password" placeholder="Password" required="required" type="password" onChange={(e) => this.setState({password: e.target.value})} />
+                                <input className="field w-input mid" name="password" placeholder="Password" required="required" type="password" onChange={(e) => this.setState({password: e.target.value})} />
                                 <input className="button w-button" type="submit" value="Login" onClick={() => this.handlePostLogin(this.state.username, this.state.password)} />
                             </div>
                         </div>

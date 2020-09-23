@@ -1812,6 +1812,13 @@ p {
   display: inline-flex;
 }
 
+.title-lokasi {
+  display: inline-flex;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  color: gray;
+}
+
 .title-radio-lokasi {
   margin-left: 10px;
 }
@@ -2059,7 +2066,7 @@ p {
 }
 
 .article-info-delete.tag {
-  display: inline-block;
+  display: flex;
   padding: 4px 7px;
   border: 1px solid green;
   color: green;
@@ -2403,6 +2410,14 @@ p {
 .thumbnail-title {
   margin-top: 0px;
   margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.close-edit {
+  color: gray;
+  text-align: right;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .header-container {

@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import Header from "../../Component/Navigation/Header";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
-import UploadImg from "../../Component/Form/UploadImg";
 
 export default class EditApart extends Component{
     constructor(props){
-        super(props)
+        super()
             this.state = {
                 post: [],
                 name: "",
                 description: "",
                 facility: "",
                 image: null,
-                LocationId: ""
+                location: ""
             }
     }
 
@@ -22,26 +21,25 @@ export default class EditApart extends Component{
     }
 
     getPostApi = () => {
-        axios.get("https://cooperative-express.herokuapp.com/locations")
+        let id = this.props.match.params.idApart
+        axios.get(`https://api.ismyroom.com/apartments/${id}`)
         .then((result)=>{
             this.setState({
-                post: result.data
+                post: result.data,
             })
-        })
+        }) 
     }
 
-    handleSubmit = () => {
-        // const data = new FormData()
+    handleUpdate = (id) => {
         const payload = {
             "name" : this.state.name,
             "description" : this.state.description,
-            "facility" : this.state.facility,
-            "image" : this.state.image,
-            "LocationId" : this.state.LocationId
+            "facility": this.state.facility,
+            "location": this.state.location,
+            "image": this.state.image
         }
         const data = payload
-        // data.append("name", this.state.name)
-        axios.post("https://cooperative-express.herokuapp.com/apartments", data, {
+        axios.patch(`https://api.ismyroom.com/apartments/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -50,14 +48,38 @@ export default class EditApart extends Component{
         }).then((res) => {
             console.log(res)
             if(res.status === 200){
-                alert("berhasil menambahkan data")
+                alert("berhasil memperbarui data")
             }else {
-                alert("gagal menambahkan data")
+                alert("gagal memperbarui data")
             }
             this.getPostApi()
         })
     }
-    
+
+    // handleSubmit = () => {
+    //     const data = new FormData()
+
+    //     data.append("name", this.state.name)
+    //     data.append("description", this.state.description)
+    //     data.append("facility", this.state.facility)
+    //     data.append("location", this.state.location)
+    //     data.append("image", this.state.image)
+
+    //     axios.post("https://api.ismyroom.com/apartments", data, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             "Content-Type": "multipart/form-data"
+    //         }
+    //     }).then((res) => {
+    //         console.log(res)
+    //         if(res.status === 200){
+    //             alert("berhasil menambahkan data")
+    //         }else {
+    //             alert("gagal menambahkan data")
+    //         }
+    //     })
+    // }
+
     render(){
         return(
             <div className="all-content w-clearfix">
@@ -65,28 +87,19 @@ export default class EditApart extends Component{
                 <div className="content main-column">
                     <Header/>
                     <div className="section">
-                        <h1>Edit Data Apartemen</h1>
-                        <p>Halaman ini untuk merubah data apartemen yang akan disewakan</p>
+                        <h1>Edit Apartemen</h1>
+                        <p>Halaman ini untuk merubah data apartemen</p>
                         <div className="form-wrapper w-form">
                             <div>
-                                <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
-                                <input className="field w-input" name="fasilitas" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})}/>
+                                <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" defaultValue={this.state.post.name} onChange={(e) => this.setState({name: e.target.value})} />
+                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.post.facility} onChange={(e) => this.setState({facility: e.target.value})}/>
+                                <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text" defaultValue={this.state.post.location} onChange={(e) => this.setState({location: e.target.value})}/>
                                 <div className="lokasi-menu-list">
-                                    <label htmlFor="layanan">Lokasi</label>
-                                    {
-                                        this.state.post.map((data,key) => {
-                                            return (
-                                                <div className="margin-radio" key={key}>
-                                                    <input type="radio" value={data.id} name="lokasi" className="radio-menu-lokasi" onChange={(e) => this.setState({LocationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
-                                                </div> 
-                                            )
-                                        })
-                                    }
+                                    <label htmlFor="mainimage">Gambar Utama</label>
+                                    <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
                                 </div>
-                                <UploadImg/>
-                                <input className="field w-input" name="gambar" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
-                                <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                <input className="button w-button" type="submit" value="Tambah Apartemen" onClick={this.handleSubmit} />
+                                <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" defaultValue={this.state.post.description} onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                <input className="button w-button" type="submit" value="Edit Apartemen" onClick={this.handleUpdate} />
                             </div>
                         </div>
                     </div>

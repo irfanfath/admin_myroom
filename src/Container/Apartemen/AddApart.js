@@ -5,15 +5,14 @@ import axios from "axios";
 
 export default class AddApart extends Component{
     constructor(props){
-        super(props)
-
+        super()
             this.state = {
                 post: [],
                 name: "",
                 description: "",
                 facility: "",
                 image: null,
-                locationId: ""
+                location: ""
             }
     }
 
@@ -22,7 +21,7 @@ export default class AddApart extends Component{
     }
 
     getPostApi = () => {
-        axios.get("https://cooperative-express.herokuapp.com/locations")
+        axios.get("https://api.ismyroom.com/locations")
         .then((result)=>{
             this.setState({
                 post: result.data
@@ -30,22 +29,48 @@ export default class AddApart extends Component{
         })
     }
 
+    // handleSubmit = () => {
+    //     const payload = {
+    //         "name" : this.state.name,
+    //         "description" : this.state.description,
+    //         "facility" : this.state.facility,
+    //         // "image" : this.state.image,
+    //         "location" : this.state.location
+    //     }
+    //     const imageData = new FormData()
+    //     imageData.append("image", this.state.image)
+    //     const data = payload
+    //     axios.post("https://api.ismyroom.com/apartments", data, imageData, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //             Accept: "application/json",
+    //             "Content-Type": "multipart/form-data"
+    //         }
+    //     }).then((res) => {
+    //         console.log(res)
+    //         if(res.status === 201){
+    //             alert("berhasil menambahkan data")
+    //         }else {
+    //             alert("gagal menambahkan data")
+    //         }
+    //         this.getPostApi()
+    //     })
+    // }
+
+
     handleSubmit = () => {
-        const payload = {
-            "name" : this.state.name,
-            "description" : this.state.description,
-            "facility" : this.state.facility,
-            "image" : this.state.image,
-            "locationId" : this.state.locationId
-        }
-        // const imageData = new FormData()
-        // imageData.append("image", this.state.image)
-        const data = payload
+        const data = new FormData()
+
+        data.append("name", this.state.name)
+        data.append("description", this.state.description)
+        data.append("facility", this.state.facility)
+        data.append("location", this.state.location)
+        data.append("image", this.state.image)
+
         axios.post("https://api.ismyroom.com/apartments", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                "Content-Type": "multipart/form-data"
             }
         }).then((res) => {
             console.log(res)
@@ -54,40 +79,9 @@ export default class AddApart extends Component{
             }else {
                 alert("gagal menambahkan data")
             }
-            this.getPostApi()
         })
     }
 
-    // handleSubmit = () => {
-    //     const data = new FormData()
-
-    //     data.append("name", this.state.name)
-    //     data.append("description", this.state.description)
-    //     data.append("facility", this.state.facility)
-    //     data.append("locationId", this.state.locationId)
-    //     data.append("image", this.state.image)
-
-    //     axios.post("https://api.ismyroom.com/apartments", data, {
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "multipart/form-data"
-    //         }
-    //     }).then((res) => {
-    //         console.log(res)
-    //         if(res.status === 200){
-    //             alert("berhasil menambahkan data")
-    //         }else {
-    //             alert("gagal menambahkan data")
-    //         }
-    //     }).catch(error => {
-    //         console.error(error.message);
-    //       });
-    // }
-
-    onSubmit() {
-        console.log(this.state.LocationId);
-    }
-    
     render(){
         return(
             <div className="all-content w-clearfix">
@@ -96,23 +90,29 @@ export default class AddApart extends Component{
                     <Header/>
                     <div className="section">
                         <h1>Tambah Apartemen Baru</h1>
-                        <p>Halaman ini untuk menambahkan apartemen baru yang akan disewakan</p>
+                        <p>Halaman ini untuk menambahkan apartemen baru</p>
                         <div className="form-wrapper w-form">
                             <div>
                                 <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})}/>
                                 <div className="lokasi-menu-list">
-                                    <label htmlFor="Lokasi">Lokasi</label>
-                                    {
+                                    <div className="title-lokasi">* List Lokasi Tersedia :</div>
+                                        {
+                                            this.state.post.map((data,key)=> 
+                                                <div className="title-lokasi" key={key}>- {data.name}</div>
+                                            )
+                                        }
+                                    <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text" onChange={(e) => this.setState({location: e.target.value})}/>
+                                    {/* {
                                         this.state.post.map((data,key) => {
                                             return (
                                                 <div className="margin-radio" key={key}>
-                                                    <input type="radio" value={data.id} name="locationId" className="radio-menu-lokasi" onChange={(e) => this.setState({locationId: e.target.value})}  /><div className="title-radio-lokasi">{data.name}</div>
+                                                    <input type="radio" value={data.id} name="locationId" className="radio-menu-lokasi" onChange={(e) => this.setState({locationId: e.target.value})} /><div className="title-radio-lokasi">{data.name}</div>
                                                 </div> 
                                             )
                                         })
                                     }
-                                     <button type="button" onClick={this.onSubmit} className="btn">Save</button>
+                                     <button type="button" onClick={this.onSubmit} className="btn">Save</button> */}
                                 </div>
                                 {/* <input className="field w-input" name="gambar" placeholder="Gambar" required="required" type="text" onChange={(e) => this.setState({image: e.target.value})}/> */}
                                 <div className="lokasi-menu-list">

@@ -17,6 +17,7 @@ import Feature from "./Container/Feature";
 import Profile from "./Container/Profile";
 import Testimoni from "./Container/Testimoni";
 import ListTestimoni from "./Container/ListTestimoni";
+import Loc from "./Container/Loc";
 
 class Main extends Component {
     render(){
@@ -31,7 +32,7 @@ class Main extends Component {
                     <Route path="/listsewa" component={ListSewa}/>
                     <Route path="/listjual" component={ListJual}/>
                     <Route path="/addapart" component={AddApart}/>
-                    <Route path="/editapart" component={EditApart}/>
+                    <Route path="/editapart/:idApart" component={EditApart}/>
                     <Route path="/detailapart/:idApart" component={DetailApart}/>
                     <Route path="/location" component={Location}/>
                     <Route path="/facility" component={Facility}/>
@@ -39,6 +40,7 @@ class Main extends Component {
                     <Route path="/unit/:idApart" component={Unit}/>
                     <Route path="/detailunit" component={DetailUnit}/>
                     <Route path="/addunit" component={AddUnit}/>
+                    <Route path="/loc" component={Loc}/>
             </HashRouter>
         )
     }

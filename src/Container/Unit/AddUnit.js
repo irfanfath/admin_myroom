@@ -2,14 +2,32 @@ import React, { Component } from "react";
 import Header from "../../Component/Navigation/Header";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
-import UploadImg from "../../Component/Form/UploadImg";
+// import UploadImg from "../../Component/Form/UploadImg";
+import { StyledDropZone } from 'react-drop-zone'
+import 'react-drop-zone/dist/styles.css'
 
 export default class AddUnit extends Component{
-    state = {
-        post: [],
-        postFeature: [],
-        showSewa: true
+    constructor(props){
+        super()
+            this.state = {
+                post: [],
+                unitCode: "",
+                name: "",
+                description: "",
+                facility: "",
+                feature: "",
+                image: null,
+                status: "",
+                images: null,
+                apartmentId: "",
+                shoeSewa: true
+            }
     }
+
+    setFile = (images) => {
+        this.setState({ images })
+      }
+
 
     componentDidMount(){
         axios.get("https://cooperative-express.herokuapp.com/facilities")
@@ -18,15 +36,33 @@ export default class AddUnit extends Component{
                 post: result.data,
             })
         })
-        this.getFeature()
     }
 
-    getFeature = () => {
-        axios.get("https://cooperative-express.herokuapp.com/features")
-        .then((result)=>{
-            this.setState({
-                postFeature: result.data
-            })
+    handleSubmit = () => {
+        const data = new FormData()
+
+        data.append("unitCode", this.state.unitCode)
+        data.append("name", this.state.name)
+        data.append("description", this.state.description)
+        data.append("facility", this.state.facility)
+        data.append("feature", this.state.feature)
+        data.append("image", this.state.image)
+        data.append("status", this.state.status)
+        data.append("images", this.state.images)
+        data.append("apartmentId", this.state.apartmentId)
+
+        axios.post("https://api.ismyroom.com/units", data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "multipart/form-data"
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.status === 201){
+                alert("berhasil menambahkan data")
+            }else {
+                alert("gagal menambahkan data")
+            }
         })
     }
 
@@ -38,7 +74,12 @@ export default class AddUnit extends Component{
         this.setState({showSewa: false})
     }
 
+    handleSample = () => {
+        alert("Berhasil Menambahkan Data")
+    }
+
     render(){
+        const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
         return(
             <div className="all-content w-clearfix">
                 <Sidebar/>
@@ -48,9 +89,11 @@ export default class AddUnit extends Component{
                         <h1>Tambah Unit Baru</h1>
                         <p>Halaman ini untuk menambahkan unit baru yang akan disewakan</p>
                         <div className="form-wrapper w-form">
-                            <form data-name="Suggest" name="wf-form-suggest">
-                                <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" />
-                                <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" />
+                                <input className="field w-input" name="idapart" placeholder="Apartment Id" required="required" type="text" onChange={(e) => this.setState({apartmentId: e.target.value})} />
+                                <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
+                                <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
+                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
+                                <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Layanan</label>
                                     <div className="margin-radio">
@@ -72,46 +115,25 @@ export default class AddUnit extends Component{
                                     <input className="field  w-input" name="harga2" placeholder="Harga Jual" required="required" type="text" />
                                 }
                                 <div className="lokasi-menu-list">
-                                    <label htmlFor="Fasilitas">Fasilitas</label>
-                                    {
-                                        this.state.post.map((data,key) => {
-                                            return (
-                                                <div className="margin-radio" key={key}>
-                                                    <input type="checkbox" value={data.id} name="LocationId" className="radio-menu-lokasi" /><div className="title-radio-lokasi">{data.name}</div>
-                                                </div> 
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <div className="lokasi-menu-list">
-                                    <label htmlFor="Feature">Kelengkapan Unit</label>
-                                    {
-                                        this.state.postFeature.map((data,key) => {
-                                            return (
-                                                <div className="margin-radio" key={key}>
-                                                    <input type="checkbox" value={data.id} name="LocationId" className="radio-menu-lokasi" /><div className="title-radio-lokasi">{data.name}</div>
-                                                </div> 
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
                                     <div className="margin-radio">
-                                    <input type="radio" value="tersedia" name="status" className="radio-menu-lokasi" /><div className="title-radio-lokasi">Tersedia</div>
+                                    <input type="radio" value="tersedia" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
                                     </div>
                                     <div className="margin-radio">
-                                    <input type="radio" value="tersewa" name="status" className="radio-menu-lokasi" /><div className="title-radio-lokasi">Tersewa</div>
+                                    <input type="radio" value="tersewa" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
                                     </div>
                                 </div>
-                                <UploadImg/>
+                                
+                                {/* <UploadImg/> */}
+                                <div>
+                                    <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.value})}>{label}</StyledDropZone>
+                                </div>
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>
-                                    <input className="field w-input" name="image" required="required" type="file" />
+                                    <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.value})} />
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required"></textarea>
-                                <input className="button w-button" type="submit" value="Tambah Unit" />
-                            </form>
+                                <input className="button w-button" type="submit" value="Tambah Unit" onClick={this.handleSample} />
                         </div>
                     </div>
                 </div>
