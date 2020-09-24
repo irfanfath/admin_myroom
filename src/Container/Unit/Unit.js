@@ -22,7 +22,7 @@ class Unit extends Component {
                 }
             }
             localStorage.setItem('apart', this.state.post[0].apartmentId);
-            console.log(this.state.post[0].apartmentId)
+            console.log(res.data)
         })
     }
 
@@ -53,7 +53,10 @@ class Unit extends Component {
                         <section className="article-text-wrapper w-clearfix">
                             <h2 className="arrow">❯</h2>
                             <h2 className="thumbnail-title">{data.name}</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.&nbsp;</p>
+                            <p>{data.description}</p>
+                            <p>Fasilitas : {data.facility}</p>
+                            <p>Kelengkapan Unit : {data.feature}</p>
+                            <p>Status : {data.status}</p>
                             <div className="article-info-wrapper">
                                 <div className="article-info-text">{data.unitCode}</div>
                                 <div className="article-info-text tag">Edit</div>
