@@ -21,12 +21,17 @@ class Unit extends Component {
                     this.setState({post: [...this.state.post, arrData[i]]})
                 }
             }
-            console.log(this.state.post)
+            localStorage.setItem('apart', this.state.post[0].apartmentId);
+            console.log(this.state.post[0].apartmentId)
         })
     }
 
     handleMoveAdd = () => {
         this.props.history.push("/addunit")
+    }
+
+    handleMoveAddJual = () => {
+        this.props.history.push("/addunitjual")
     }
 
     handleDetail = () => {
@@ -39,7 +44,8 @@ class Unit extends Component {
             <Sidebar/>
             <div className="content main-column">
                 <Header/>
-                <input className="button w-button" type="submit" value="Tambah Unit Baru" onClick={this.handleMoveAdd} />
+                <input className="button w-button" type="submit" value="Tambah Unit Disewa" onClick={this.handleMoveAdd} />
+                <input className="button-edit w-button" type="submit" value="Tambah Unit Dijual" onClick={this.handleMoveAddJual} />
                 {
                     this.state.post.map((data, key)=>
                     <div className="article w-clearfix w-inline-block" key={key} onClick={() => this.handleDetail(data.id)}>

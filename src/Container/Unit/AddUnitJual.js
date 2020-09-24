@@ -6,7 +6,7 @@ import axios from "axios";
 import { StyledDropZone } from 'react-drop-zone'
 import 'react-drop-zone/dist/styles.css'
 
-export default class AddUnit extends Component{
+export default class AddUnitJual extends Component{
     constructor(props){
         super()
             this.state = {
@@ -21,10 +21,6 @@ export default class AddUnit extends Component{
                 status: "",
                 images: null,
                 showHarga: false,
-                showSewa: true,
-
-                //rents
-                period: "",
 
                 //sell
                 unitId: "",
@@ -75,30 +71,6 @@ export default class AddUnit extends Component{
         })
     }
 
-    handlePostRent = () => {
-        const payload = {
-            "unitId" : this.state.unitId,
-            "period" : this.state.period,
-            "price" : this.state.price,
-            "discount" : this.state.discount
-        }
-        const data = payload
-        axios.post("https://api.ismyroom.com/rents", data, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then((res) => {
-            console.log(res)
-            if(res.status === 201){
-                alert("Berhasil menambahkan data")
-            }else {
-                alert("Gagal menambahkan data")
-            }
-        })
-    }
-
     handlePostSell = () => {
         const payload = {
             "unitId" : this.state.unitId,
@@ -121,14 +93,6 @@ export default class AddUnit extends Component{
             }
         })
     } 
-
-    handelHarga = () => {
-        this.setState({showSewa: true})
-    }
-
-    handleHargaOff = () => {
-        this.setState({showSewa: false})
-    }
 
     render(){
         const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
@@ -165,17 +129,21 @@ export default class AddUnit extends Component{
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
-                                {
+                                <div className="lokasi-menu-list">
+                                    <input className="field  w-input" name="unitid" placeholder="Unit Id" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
+                                    <input className="field  w-input" name="harga" placeholder="Harga Jual" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})}/>
+                                    <button className="button w-button" onClick={this.handlePostSell} >Submit</button>  
+                                </div>
+                                  
+                                {/* {
                                     this.state.showHarga? 
                                     <>
-                                        <label htmlFor="harga">Notes : Apabila Harga Tersedia Di Beberapa Periode, Input perperiode</label>
-                                        <input className="field first w-input" name="unitd" placeholder="UnitId" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
-                                        <input className="field mid w-input" name="periode" placeholder="Periode" required="required" type="text" onChange={(e) => this.setState({period: e.target.value})} />
-                                        <input className="field last w-input" name="harga" placeholder="Harga" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})} /> 
-                                        <button className="button w-button" onClick={this.handlePostRent} >Submit</button>
+                                        <input className="field  w-input" name="unitid" placeholder="Unit Id" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
+                                        <input className="field  w-input" name="harga" placeholder="Harga Jual" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})}/>
+                                        <button className="button w-button" onClick={this.handlePostSell} >Submit</button>            
                                     </>
                                     : null
-                                }
+                                } */}
                         </div>
                     </div>
                 </div>

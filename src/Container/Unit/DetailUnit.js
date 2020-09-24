@@ -54,7 +54,7 @@ export default class DetailUnit extends Component {
                                     sizes="(max-width: 767px) 96vw, (max-width: 991px) 478.65625px, 619.984375px"
                                     src="http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f3d14073df7f296b000feb_jeep.jpg"
                                     alt=""
-                                    srcset="
+                                    srcSet="
                                         http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f3d14073df7f296b000feb_jeep-p-500x375.jpeg    500w,
                                         http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f3d14073df7f296b000feb_jeep-p-800x600.jpeg    800w,
                                         http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f3d14073df7f296b000feb_jeep-p-1080x810.jpeg  1080w,
