@@ -17,7 +17,6 @@ import Feature from "./Container/Feature";
 import Profile from "./Container/Profile";
 import Testimoni from "./Container/Testimoni";
 import ListTestimoni from "./Container/ListTestimoni";
-import Loc from "./Container/Loc";
 import AddUnitJual from "./Container/Unit/AddUnitJual";
 
 class Main extends Component {
@@ -42,7 +41,6 @@ class Main extends Component {
                     <Route path="/detailunit" component={DetailUnit}/>
                     <Route path="/addunit" component={AddUnit}/>
                     <Route path="/addunitjual" component={AddUnitJual}/>
-                    <Route path="/loc" component={Loc}/>
             </HashRouter>
         )
     }

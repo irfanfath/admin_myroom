@@ -125,7 +125,9 @@ class ListSewa extends Component {
                         <section className="article-text-wrapper w-clearfix">
                             <h2 className="arrow">❯</h2>
                             <h2 className="thumbnail-title" onClick={() => this.handleMoveDetail(data.id)}>{data.name}</h2>
-                            <p>{data.description}&nbsp;</p>
+                            <p>Lokasi : {data.location}</p>
+                            <p>Fasilitas : {data.facility}</p>
+                            <p>Dekripsi : {data.description}&nbsp;</p>
                             <div className="article-info-wrapper">
                                 <div className="article-info-text tag" onClick={() => this.handleMoveListUnit(data.id)}>List Unit</div>
                                 {/* <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)}>Edit Apartemen</div> */}
@@ -140,14 +142,14 @@ class ListSewa extends Component {
                                 <p>Halaman ini untuk merubah data apartemen</p>
                                 <div className="form-wrapper w-form">
                                     <div>
-                                        <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" defaultValue={data.name} onChange={(e) => this.setState({name: e.target.value})} />
-                                        <textarea className="big field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={data.facility} onChange={(e) => this.setState({facility: e.target.value})}/>
-                                        <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text" defaultValue={data.location} onChange={(e) => this.setState({location: e.target.value})}/>
+                                        <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text"  onChange={(e) => this.setState({name: e.target.value})} />
+                                        <textarea className="big field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})}/>
+                                        <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text"  onChange={(e) => this.setState({location: e.target.value})}/>
                                         <div className="lokasi-menu-list">
                                             <label htmlFor="mainimage">Gambar Utama</label>
                                             <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
                                         </div>
-                                        <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" defaultValue={data.description} onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                        <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                         <input className="button w-button" type="submit" value="Edit Apartemen" onClick={() => this.handleUpdate(data.id)} />
                                     </div>
                                 </div>
