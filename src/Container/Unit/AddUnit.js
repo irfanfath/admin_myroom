@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Header from "../../Component/Navigation/Header";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
-// import UploadImg from "../../Component/Form/UploadImg";
 import { StyledDropZone } from 'react-drop-zone'
 import 'react-drop-zone/dist/styles.css'
 
@@ -20,16 +19,6 @@ export default class AddUnit extends Component{
                 image: null,
                 status: "",
                 images: null,
-                showHarga: false,
-                showSewa: true,
-
-                //rents
-                period: "",
-
-                //sell
-                unitId: "",
-                price: "",
-                discount: 10
             }
     }
 
@@ -68,66 +57,13 @@ export default class AddUnit extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Silahkan masukan harga")
-                this.setState({showHarga: true})
+                // this.setState({showHarga: true})
+                localStorage.setItem('idharga', res.data.id);
+                this.props.history.push('/hargaunit')
             }else {
                 alert("Gagal menambahkan data")
             }
         })
-    }
-
-    handlePostRent = () => {
-        const payload = {
-            "unitId" : this.state.unitId,
-            "period" : this.state.period,
-            "price" : this.state.price,
-            "discount" : this.state.discount
-        }
-        const data = payload
-        axios.post("https://api.ismyroom.com/rents", data, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then((res) => {
-            console.log(res)
-            if(res.status === 201){
-                alert("Berhasil menambahkan data")
-            }else {
-                alert("Gagal menambahkan data")
-            }
-        })
-    }
-
-    handlePostSell = () => {
-        const payload = {
-            "unitId" : this.state.unitId,
-            "price" : this.state.price,
-            "discount" : this.state.discount
-        }
-        const data = payload
-        axios.post("https://api.ismyroom.com/sells", data, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then((res) => {
-            console.log(res)
-            if(res.status === 201){
-                alert("Berhasil menambahkan data")
-            }else {
-                alert("Gagal menambahkan data")
-            }
-        })
-    } 
-
-    handelHarga = () => {
-        this.setState({showSewa: true})
-    }
-
-    handleHargaOff = () => {
-        this.setState({showSewa: false})
     }
 
     render(){
@@ -146,7 +82,6 @@ export default class AddUnit extends Component{
                                 <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
                                 <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
-                                {/* <input className="field w-input" name="status" placeholder="Status Unit" required="required" type="text" onChange={(e) => this.setState({status: e.target.value})} /> */}
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
                                     <div className="margin-radio">
@@ -165,17 +100,6 @@ export default class AddUnit extends Component{
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
-                                {
-                                    this.state.showHarga? 
-                                    <>
-                                        <label htmlFor="harga">Notes : Apabila Harga Tersedia Di Beberapa Periode, Input perperiode</label>
-                                        <input className="field first w-input" name="unitd" placeholder="UnitId" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
-                                        <input className="field mid w-input" name="periode" placeholder="Periode" required="required" type="text" onChange={(e) => this.setState({period: e.target.value})} />
-                                        <input className="field last w-input" name="harga" placeholder="Harga" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})} /> 
-                                        <button className="button w-button" onClick={this.handlePostRent} >Submit</button>
-                                    </>
-                                    : null
-                                }
                         </div>
                     </div>
                 </div>

@@ -20,12 +20,6 @@ export default class AddUnitJual extends Component{
                 image: null,
                 status: "",
                 images: null,
-                showHarga: false,
-
-                //sell
-                unitId: "",
-                price: "",
-                discount: 10
             }
     }
 
@@ -64,35 +58,13 @@ export default class AddUnitJual extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Silahkan masukan harga")
-                this.setState({showHarga: true})
+                localStorage.setItem('idharga', res.data.id);
+                this.props.history.push('/hargaunitjual')
             }else {
                 alert("Gagal menambahkan data")
             }
         })
     }
-
-    handlePostSell = () => {
-        const payload = {
-            "unitId" : this.state.unitId,
-            "price" : this.state.price,
-            "discount" : this.state.discount
-        }
-        const data = payload
-        axios.post("https://api.ismyroom.com/sells", data, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then((res) => {
-            console.log(res)
-            if(res.status === 201){
-                alert("Berhasil menambahkan data")
-            }else {
-                alert("Gagal menambahkan data")
-            }
-        })
-    } 
 
     render(){
         const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
@@ -105,12 +77,10 @@ export default class AddUnitJual extends Component{
                         <h1>Tambah Unit Baru</h1>
                         <p>Halaman ini untuk menambahkan unit baru yang akan disewakan</p>
                         <div className="form-wrapper w-form">
-                                {/* <input className="field w-input" name="idapart" placeholder="Apartment Id" required="required" type="text" onChange={(e) => this.setState({apartmentId: e.target.value})} /> */}
                                 <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
                                 <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
-                                {/* <input className="field w-input" name="status" placeholder="Status Unit" required="required" type="text" onChange={(e) => this.setState({status: e.target.value})} /> */}
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
                                     <div className="margin-radio">
@@ -128,13 +98,7 @@ export default class AddUnitJual extends Component{
                                     <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
-                                <div className="lokasi-menu-list">
-                                    <input className="field  w-input" name="unitid" placeholder="Unit Id" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
-                                    <input className="field  w-input" name="harga" placeholder="Harga Jual" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})}/>
-                                    <button className="button w-button" onClick={this.handlePostSell} >Submit</button>  
-                                </div>
-                                  
+                                <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />                                  
                                 {/* {
                                     this.state.showHarga? 
                                     <>

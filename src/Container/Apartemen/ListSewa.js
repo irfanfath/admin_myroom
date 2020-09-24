@@ -20,6 +20,7 @@ class ListSewa extends Component {
             this.setState({
                 post: result.data
             })
+            console.log(result.data)
         }) 
     }
 
@@ -93,6 +94,7 @@ class ListSewa extends Component {
 
     handleMoveListUnit = (id) => {
         window.open(`#/unit/${id}`, "_blank")
+        localStorage.setItem('apart', id);
     } 
 
     handleMoveDetail = (id) => {

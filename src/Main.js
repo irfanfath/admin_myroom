@@ -18,6 +18,8 @@ import Profile from "./Container/Profile";
 import Testimoni from "./Container/Testimoni";
 import ListTestimoni from "./Container/ListTestimoni";
 import AddUnitJual from "./Container/Unit/AddUnitJual";
+import HargaUnit from "./Container/Unit/HargaUnit";
+import HargaUnitJual from "./Container/Unit/HargaUnitJual";
 
 class Main extends Component {
     render(){
@@ -40,6 +42,8 @@ class Main extends Component {
                     <Route path="/unit/:idApart" component={Unit}/>
                     <Route path="/detailunit" component={DetailUnit}/>
                     <Route path="/addunit" component={AddUnit}/>
+                    <Route path="/hargaunit" component={HargaUnit}/>
+                    <Route path="/hargaunitjual" component={HargaUnitJual}/>
                     <Route path="/addunitjual" component={AddUnitJual}/>
             </HashRouter>
         )
