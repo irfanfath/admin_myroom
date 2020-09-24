@@ -578,6 +578,22 @@ textarea.w-select {
   margin-left: 77%;
   margin-top: 2%;
 }
+#posisi-loader {
+  background-color: rgba(0,0,0,0.83);
+  position: fixed; /* Stay in place */
+  z-index: 1054; /* Sit on top */
+  padding-top: 20%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+}
+
+.title-loader {
+  color: #fff;
+  text-align: center;
+}
 @media screen and (max-width: 991px) {
   .w-container {
       max-width: 728px;

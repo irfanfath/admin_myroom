@@ -33,7 +33,6 @@ export default class HargaUnit extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Berhasil menambahkan data")
-                this.props.history.push('/')
             }else {
                 alert("Gagal menambahkan data")
             }
@@ -49,7 +48,7 @@ export default class HargaUnit extends Component{
                 <div className="section">
                     <h1>Input Harga Unit Baru</h1>
                     <p>Halaman ini untuk menambahkan harga unit baru yang akan disewakan</p>
-                    <label htmlFor="harga">Notes : Apabila Harga Tersedia Di Beberapa Periode, Input perperiode</label>
+                    <label htmlFor="harga">Notes : Apabila Harga Tersedia Di Beberapa Periode, Input satu persatu</label>
                     <input className="field first w-input" name="periode" placeholder="Periode" required="required" type="text" onChange={(e) => this.setState({period: e.target.value})} />
                     <input className="field mid w-input" name="harga" placeholder="Harga" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})} /> 
                     <button className="button w-button" onClick={this.handlePostRent} >Submit</button>

@@ -20,6 +20,7 @@ import ListTestimoni from "./Container/ListTestimoni";
 import AddUnitJual from "./Container/Unit/AddUnitJual";
 import HargaUnit from "./Container/Unit/HargaUnit";
 import HargaUnitJual from "./Container/Unit/HargaUnitJual";
+import DetailUnitJual from "./Container/Unit/DetailUnitJual";
 
 class Main extends Component {
     render(){
@@ -40,7 +41,8 @@ class Main extends Component {
                     <Route path="/facility" component={Facility}/>
                     <Route path="/feature" component={Feature}/>
                     <Route path="/unit/:idApart" component={Unit}/>
-                    <Route path="/detailunit" component={DetailUnit}/>
+                    <Route path="/detailunit/:idUnit" component={DetailUnit}/>
+                    <Route path="/detailunitjual/:idUnitJual" component={DetailUnitJual}/>
                     <Route path="/addunit" component={AddUnit}/>
                     <Route path="/hargaunit" component={HargaUnit}/>
                     <Route path="/hargaunitjual" component={HargaUnitJual}/>

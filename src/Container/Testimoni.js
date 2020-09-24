@@ -23,8 +23,9 @@ export default class Testimoni extends Component{
             }
         }).then((res) => {
             console.log(res)
-            if(res.status === 200){
+            if(res.status === 201){
                 alert("berhasil menambahkan testimonials")
+                this.props.history('/listtestimoni')
             }else {
                 alert("gagal menambahkan testimonials")
             }

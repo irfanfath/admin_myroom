@@ -31,7 +31,6 @@ export default class HargaUnitJual extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Berhasil menambahkan data")
-                this.props.history.push('/')
             }else {
                 alert("Gagal menambahkan data")
             }

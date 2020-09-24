@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import Header from "../../Component/Navigation/Header";
 
-export default class DetailUnit extends Component {
+export default class DetailUnitJual extends Component {
     state = {
         post: [],
         postRent: [],
         postImage: [],
         unitId: "",
-        period: "",
         price: "",
         discount: 10,
         showEdit: false
@@ -19,12 +18,12 @@ export default class DetailUnit extends Component {
     }
 
     handleGetUnits = () => {
-        let id = this.props.match.params.idUnit
+        let id = this.props.match.params.idUnitJual
         axios.get(`https://api.ismyroom.com/units/${id}`)
         .then((result)=>{
             this.setState({
                 post: result.data,
-                postRent : result.data.rents,
+                postRent : result.data.sells,
                 postImage : result.data.unitImages
             })
             console.log(result.data)
@@ -34,12 +33,11 @@ export default class DetailUnit extends Component {
     handlePostRent = () => {
         const payload = {
             "unitId" : this.state.post.id,
-            "period" : this.state.period,
             "price" : this.state.price,
             "discount" : this.state.discount
         }
         const data = payload
-        axios.post("https://api.ismyroom.com/rents", data, {
+        axios.post("https://api.ismyroom.com/sells", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -59,12 +57,11 @@ export default class DetailUnit extends Component {
     handleUpdate = (id) => {
         const payload = {
             "unitId" : this.state.post.id,
-            "period" : this.state.period,
             "price" : this.state.price,
             "discount" : this.state.discount
         }
         const data = payload
-        axios.patch(`https://api.ismyroom.com/rents/${id}`, data, {
+        axios.patch(`https://api.ismyroom.com/sells/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -82,7 +79,7 @@ export default class DetailUnit extends Component {
     }
 
     handleRemove = (id) => {
-        axios.delete(`https://api.ismyroom.com/rents/${id}`, {
+        axios.delete(`https://api.ismyroom.com/sells/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -133,7 +130,6 @@ export default class DetailUnit extends Component {
                                             <div className="section">
                                                 <div className="close-edit" onClick={this.handleCloseEdit}>x</div>
                                                 <h1>Tambah Harga Unit Baru</h1>
-                                                <input className="field first w-input" name="periode" placeholder="Periode" required="required" type="text" onChange={(e) => this.setState({period: e.target.value})} />
                                                 <input className="field mid w-input" name="harga" placeholder="Harga" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})} /> 
                                                 <button className="button w-button" onClick={this.handlePostRent}>Update Data</button>
                                             </div>
@@ -144,15 +140,14 @@ export default class DetailUnit extends Component {
                             {
                                 this.state.postRent.map((data,key)=>
                                 <div className="title" key={key}>
-                                    <h4>Harga : {data.price} / {data.period} Bulan &nbsp;
+                                    <h4>Harga : {data.price} &nbsp;
                                         <div className="article-info-text tag" onClick={this.handleshowEdit}>Edit Harga</div>
                                         <div className="article-info-text tag"  onClick={() => this.handleRemove(data.id)}>Hapus Harga</div>
                                         {
                                             this.state.showEdit? 
                                             <div className="section">
-                                                <div className="close-edit" onClick={this.handleCloseEdit}>x</div>
+                                                <h4 className="close-edit" onClick={this.handleCloseEdit}>x</h4>
                                                 <h1>Edit Harga Unit Baru</h1>
-                                                <input className="field first w-input" name="periode" placeholder="Periode" required="required" type="text" onChange={(e) => this.setState({period: e.target.value})} />
                                                 <input className="field mid w-input" name="harga" placeholder="Harga" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})} /> 
                                                 <button className="button w-button" onClick={() => this.handleUpdate(data.id)}>Update Data</button>
                                             </div>

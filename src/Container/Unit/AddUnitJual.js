@@ -20,6 +20,7 @@ export default class AddUnitJual extends Component{
                 image: null,
                 status: "",
                 images: null,
+                showLoader: false
             }
     }
 
@@ -38,6 +39,7 @@ export default class AddUnitJual extends Component{
     }
 
     handleSubmit = () => {
+        this.setState({showLoader: true})
         const data = new FormData()
         data.append("unitCode", this.state.unitCode)
         data.append("name", this.state.name)
@@ -58,13 +60,23 @@ export default class AddUnitJual extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Silahkan masukan harga")
+                this.setState({showLoader: false})
                 localStorage.setItem('idharga', res.data.id);
                 this.props.history.push('/hargaunitjual')
             }else {
                 alert("Gagal menambahkan data")
+                this.setState({showLoader: false})
             }
         })
     }
+
+    LoaderModal = () => {
+        return (
+            <div id="posisi-loader">
+              <div className="title-loader">Please Wait...</div>
+            </div>
+        )
+      }
 
     render(){
         const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
@@ -99,15 +111,9 @@ export default class AddUnitJual extends Component{
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />                                  
-                                {/* {
-                                    this.state.showHarga? 
-                                    <>
-                                        <input className="field  w-input" name="unitid" placeholder="Unit Id" required="required" type="text" onChange={(e) => this.setState({unitId: e.target.value})} />
-                                        <input className="field  w-input" name="harga" placeholder="Harga Jual" required="required" type="text" onChange={(e) => this.setState({price: e.target.value})}/>
-                                        <button className="button w-button" onClick={this.handlePostSell} >Submit</button>            
-                                    </>
-                                    : null
-                                } */}
+                                {
+                                    this.state.showLoader ? <this.LoaderModal /> : null
+                                }
                         </div>
                     </div>
                 </div>

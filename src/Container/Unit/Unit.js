@@ -12,7 +12,18 @@ class Unit extends Component {
         postSell: [],
         activeItem: "1",
         sewaActive: true,
-        showEdit: false
+        showEdit: false,
+
+        //update unit
+        apartmentId: localStorage.getItem('apart'),
+        unitCode: "",
+        name: "",
+        description: "",
+        facility: "",
+        feature: "",
+        image: null,
+        status: "",
+        images: null,
     }
     
     setFile = (images) => {
@@ -28,9 +39,16 @@ class Unit extends Component {
       };
 
     componentDidMount(){
+        const session = localStorage.getItem('session')
+        if (session !== "active"){
+            this.props.history.push("/login")
+        } else (
+            this.handlGetRent()
+        )
         this.setState({
             filtered: this.state.post
         });
+        
         // let id = this.props.match.params.idApart
         // axios.get(`https://api.ismyroom.com/units?filter=rent`)
         // .then((res) =>{
@@ -42,7 +60,6 @@ class Unit extends Component {
         //     }
         //     // localStorage.setItem('apart', this.state.post[0].apartmentId);
         // })
-        this.handlGetRent()
         this.handlGetSell()
     }
 
@@ -72,6 +89,34 @@ class Unit extends Component {
           })
     }
 
+    handleUpdate = (id) => {
+        const data = new FormData()
+        data.append("unitCode", this.state.unitCode)
+        data.append("name", this.state.name)
+        data.append("description", this.state.description)
+        data.append("facility", this.state.facility)
+        data.append("feature", this.state.feature)
+        data.append("image", this.state.image)
+        data.append("status", this.state.status)
+        data.append("images", this.state.images)
+        data.append("apartmentId", this.state.apartmentId)
+
+        axios.patch(`https://api.ismyroom.com/units/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "multipart/form-data"
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.status === 200){
+                alert("berhasil memperbarui data")
+            }else {
+                alert("gagal memperbarui data")
+            }
+            this.handlGetRent()
+        })
+    }
+
     handleRemoveRent = (id) => {
         axios.delete(`https://api.ismyroom.com/units/${id}`, {
             headers: {
@@ -86,6 +131,7 @@ class Unit extends Component {
                 alert("gagal menghapus data")
             }
         }) 
+        this.handlGetRent()
     }
 
     handleMoveAdd = () => {
@@ -104,8 +150,12 @@ class Unit extends Component {
         this.setState({showEdit: false})
     }
 
-    handleDetail = () => {
-        this.props.history.push("/detailunit")
+    handleDetail = (id) => {
+        this.props.history.push(`/detailunit/${id}`)
+    }
+
+    handleDetailJual = (id) => {
+        this.props.history.push(`/detailunitjual/${id}`)
     }
 
   render() {
@@ -125,18 +175,76 @@ class Unit extends Component {
                                 {
                                     this.state.post.map((data, key)=>
                                     <div className="article w-clearfix w-inline-block" key={key}>
-                                        <div className="image-wrapper"><img className="thumbnail" src="http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f320b1593f6edf41000793_thumb11.jpg" alt="" width="109" /></div>
+                                        <div className="image-wrapper"><img className="thumbnail" src={data.image} alt="" width="109" /></div>
+                                            <section className="article-text-wrapper w-clearfix">
+                                                <h2 className="arrow">❯</h2>
+                                                <h2 className="thumbnail-title" onClick={() => this.handleDetail(data.id)}>{data.name}</h2>
+                                                <p>{data.description}</p>
+                                                <p>Fasilitas : {data.facility}</p>
+                                                <p>Kelengkapan Unit : {data.feature}</p>
+                                                <p>Status : {data.status}</p>
+                                                <div className="article-info-wrapper">
+                                                    <div className="article-info-text">{data.unitCode}</div>
+                                                    <div className="article-info-text tag" onClick={this.handleMoveEdit} >Edit Unit</div>
+                                                    <div className="article-info-text tag" onClick={() => this.handleDetail(data.id)}>Edit Harga</div>
+                                                    <div className="article-info-text tag" onClick={() => this.handleRemoveRent(data.id)}>Hapus</div>
+                                                </div>
+                                                {
+                                                    this.state.showEdit? <div className="section">
+                                                        <div className="close-edit" onClick={this.handleCloseEdit}>x</div>
+                                                                <div className="section">
+                                                                    <h1>Edit Unit</h1>
+                                                                    <p>Halaman ini untuk merubah unit</p>
+                                                                    <div className="form-wrapper w-form">
+                                                                            <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
+                                                                            <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
+                                                                            <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
+                                                                            <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
+                                                                            <div className="lokasi-menu-list">
+                                                                                <label htmlFor="status">Status Unit</label>
+                                                                                <div className="margin-radio">
+                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
+                                                                                </div>
+                                                                                <div className="margin-radio">
+                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
+                                                                            </div>
+                                                                            <div className="lokasi-menu-list">
+                                                                                <label htmlFor="mainimage">Gambar Utama</label>
+                                                                                <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
+                                                                            </div>
+                                                                            <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                                                            <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
+                                                                    </div>
+                                                                </div>
+                                                        </div> 
+                                                    : null
+                                                }
+                                            </section>
+                                        </div>
+                                    )
+                                }
+                                </MDBTabPane>
+                                <MDBTabPane className="products-list-wrapper w-dyn-list" tabId="2" role="tabpanel">
+                                <input className="button w-button" type="submit" value="Tambah Unit Dijual" onClick={this.handleMoveAddJual} />
+                                {
+                                    this.state.postSell.map((data, key)=>
+                                    <div className="article w-clearfix w-inline-block" key={key}>
+                                        <div className="image-wrapper"><img className="thumbnail" src={data.image} alt="" width="109" /></div>
                                         <section className="article-text-wrapper w-clearfix">
                                             <h2 className="arrow">❯</h2>
-                                            <h2 className="thumbnail-title" onClick={() => this.handleDetail(data.id)}>{data.name}</h2>
+                                            <h2 className="thumbnail-title" onClick={() => this.handleDetailJual(data.id)}>{data.name}</h2>
                                             <p>{data.description}</p>
                                             <p>Fasilitas : {data.facility}</p>
                                             <p>Kelengkapan Unit : {data.feature}</p>
                                             <p>Status : {data.status}</p>
                                             <div className="article-info-wrapper">
                                                 <div className="article-info-text">{data.unitCode}</div>
-                                                <div className="article-info-text tag" onClick={this.handleMoveEdit} >Edit Unit</div>
-                                                <div className="article-info-text tag">Edit Harga</div>
+                                                <div className="article-info-text tag" onClick={this.handleMoveEdit}>Edit Unit</div>
+                                                <div className="article-info-text tag" onClick={() => this.handleDetailJual(data.id)}>Edit Harga</div>
                                                 <div className="article-info-text tag" onClick={() => this.handleRemoveRent(data.id)}>Hapus</div>
                                             </div>
                                             {
@@ -167,35 +275,12 @@ class Unit extends Component {
                                                                             <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
                                                                         </div>
                                                                         <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                                                        <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
+                                                                        <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
                                                                 </div>
                                                             </div>
                                                     </div> 
-                                                    : null
-                                                    }
-                                                </section>
-                                            </div>
-                                    )
-                                }
-                                </MDBTabPane>
-                                <MDBTabPane className="products-list-wrapper w-dyn-list" tabId="2" role="tabpanel">
-                                <input className="button w-button" type="submit" value="Tambah Unit Dijual" onClick={this.handleMoveAddJual} />
-                                {
-                                    this.state.postSell.map((data, key)=>
-                                    <div className="article w-clearfix w-inline-block" key={key} onClick={() => this.handleDetail(data.id)}>
-                                        <div className="image-wrapper"><img className="thumbnail" src="http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f320b1593f6edf41000793_thumb11.jpg" alt="" width="109" /></div>
-                                        <section className="article-text-wrapper w-clearfix">
-                                            <h2 className="arrow">❯</h2>
-                                            <h2 className="thumbnail-title">{data.name}</h2>
-                                            <p>{data.description}</p>
-                                            <p>Fasilitas : {data.facility}</p>
-                                            <p>Kelengkapan Unit : {data.feature}</p>
-                                            <p>Status : {data.status}</p>
-                                            <div className="article-info-wrapper">
-                                                <div className="article-info-text">{data.unitCode}</div>
-                                                <div className="article-info-text tag">Edit</div>
-                                                <div className="article-info-text tag">Hapus</div>
-                                            </div>
+                                                : null
+                                            }
                                         </section>
                                     </div>
                                     )

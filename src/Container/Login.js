@@ -5,8 +5,7 @@ export default class Login extends Component{
     state = {
         username: "",
         password: "",
-        // showLoader: false,
-        failLogin: false
+        showLoader: false,
     }
 
     componentDidMount(){
@@ -19,9 +18,9 @@ export default class Login extends Component{
     }
 
     handlePostLogin = (username, password) => {
-        // this.setState({
-        //   showLoader: true
-        // })
+        this.setState({
+          showLoader: true
+        })
         const data = {
           "username" : username,
           "password": password
@@ -37,12 +36,22 @@ export default class Login extends Component{
               this.props.history.push("/")
           }else{
             alert("username atau password anda salah")
+            this.setState({showLoader: false})
           }
         }).catch((err) => {
             console.log(err)
             alert("username atau password anda salah")
+            this.setState({showLoader: false})
         });      
     }
+
+    LoaderModal = () => {
+        return (
+            <div id="posisi-loader">
+              <div className="title-loader">Please Wait...</div>
+            </div>
+        )
+      }
 
     render(){
         return(
@@ -59,6 +68,9 @@ export default class Login extends Component{
                                 <input className="field w-input first" name="username" placeholder="Username" required="required" type="text" onChange={(e) => this.setState({username: e.target.value})} />
                                 <input className="field w-input mid" name="password" placeholder="Password" required="required" type="password" onChange={(e) => this.setState({password: e.target.value})} />
                                 <input className="button w-button" type="submit" value="Login" onClick={() => this.handlePostLogin(this.state.username, this.state.password)} />
+                                {
+                                    this.state.showLoader ? <this.LoaderModal /> : null
+                                }
                             </div>
                         </div>
                     </div>

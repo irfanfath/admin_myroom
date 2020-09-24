@@ -12,7 +12,8 @@ export default class AddApart extends Component{
                 description: "",
                 facility: "",
                 image: null,
-                location: ""
+                location: "",
+                showLoader: false
             }
     }
 
@@ -59,8 +60,10 @@ export default class AddApart extends Component{
 
 
     handleSubmit = () => {
+        this.setState({
+            showLoader: true
+          })
         const data = new FormData()
-
         data.append("name", this.state.name)
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
@@ -76,11 +79,22 @@ export default class AddApart extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("berhasil menambahkan data")
+                this.props.history.push('/listsewa')
+                this.setState({showLoader: false})
             }else {
                 alert("gagal menambahkan data")
+                this.setState({showLoader: false})
             }
         })
     }
+
+    LoaderModal = () => {
+        return (
+            <div id="posisi-loader">
+              <div className="title-loader">Please Wait...</div>
+            </div>
+        )
+      }
 
     render(){
         return(
@@ -121,6 +135,9 @@ export default class AddApart extends Component{
                                 </div>
                                 <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Tambah Apartemen" onClick={this.handleSubmit} />
+                                {
+                                    this.state.showLoader ? <this.LoaderModal /> : null
+                                }
                             </div>
                         </div>
                     </div>

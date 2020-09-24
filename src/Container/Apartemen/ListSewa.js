@@ -11,7 +11,8 @@ class ListSewa extends Component {
         facility: "",
         image: null,
         location: "",
-        showEdit: false
+        showEdit: false,
+        showLoader: false
     }
 
     getPostApi = () => {
@@ -25,7 +26,12 @@ class ListSewa extends Component {
     }
 
     componentDidMount(){
-        this.getPostApi()
+        const session = localStorage.getItem('session')
+        if (session !== "active"){
+            this.props.history.push("/login")
+        } else (
+            this.getPostApi()
+        )
     }
 
     handleRemove = (id) => {
@@ -68,8 +74,10 @@ class ListSewa extends Component {
         //     }
         //     this.getPostApi()
         // })
+        this.setState({
+            showLoader: true
+        })
         const data = new FormData()
-
         data.append("name", this.state.name)
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
@@ -85,8 +93,10 @@ class ListSewa extends Component {
             console.log(res)
             if(res.status === 200){
                 alert("berhasil memperbarui data")
+                this.setState({showLoader: false})
             }else {
                 alert("gagal memperbarui data")
+                this.setState({showLoader: false})
             }
             this.getPostApi()
         })
@@ -112,6 +122,14 @@ class ListSewa extends Component {
     handleMoveAdd = () => {
         this.props.history.push("/addapart")
     }
+
+    LoaderModal = () => {
+        return (
+            <div id="posisi-loader">
+              <div className="title-loader">Please Wait...</div>
+            </div>
+        )
+      }
 
   render() {
     return (
@@ -153,6 +171,9 @@ class ListSewa extends Component {
                                         </div>
                                         <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                         <input className="button w-button" type="submit" value="Edit Apartemen" onClick={() => this.handleUpdate(data.id)} />
+                                        {
+                                            this.state.showLoader ? <this.LoaderModal /> : null
+                                        }
                                     </div>
                                 </div>
                             </div> : null
