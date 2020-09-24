@@ -24,8 +24,7 @@ export default class AddUnit extends Component{
 
     setFile = (images) => {
         this.setState({ images })
-      }
-
+    }
 
     componentDidMount(){
         axios.get("https://cooperative-express.herokuapp.com/facilities")

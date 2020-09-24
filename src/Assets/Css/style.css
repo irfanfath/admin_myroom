@@ -575,7 +575,8 @@ textarea.w-select {
 }
 .pilih-layanan-unit {
   display: inline-flex;
-  margin-left: 79%;
+  margin-left: 77%;
+  margin-top: 2%;
 }
 @media screen and (max-width: 991px) {
   .w-container {
