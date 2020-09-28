@@ -1,7 +1,7 @@
 {
   "name": "react-engine",
   "version": "0.1.0",
-  "homepage": "http://irfanfath.site/myroom-admin",
+  "homepage": "https://ismyroom.com/myroom-admin",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
