@@ -99,7 +99,7 @@ export default class AddUnitJual extends Component{
                                     <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
                                     </div>
                                     <div className="margin-radio">
-                                    <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
+                                    <input type="radio" value="sold" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Terjual</div>
                                     </div>
                                 </div>
                                 <div>

@@ -9,7 +9,7 @@ export default class Header extends Component {
                     <NavLink to="/listsewa" className="nav-link w-nav-link">List Apartement</NavLink>
                     <NavLink to="/location" className="nav-link w-nav-link">List Lokasi</NavLink>
                     <NavLink to="/testimoni" className="nav-link w-nav-link">Tambah Testimoni</NavLink>
-                    <NavLink to="/profile" className="nav-link w-nav-link">Edit Profile</NavLink>
+                    <NavLink to="/profile" className="nav-link w-nav-link">Update Profile</NavLink>
                     {/* <NavLink to="/facility" className="nav-link w-nav-link">Fasilitas</NavLink> */}
                     {/* <NavLink to="/feature" className="nav-link w-nav-link">Fitur Unit</NavLink> */}
                 </nav>

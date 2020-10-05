@@ -1902,7 +1902,7 @@ p {
   margin-top: 0px;
   margin-bottom: 31px;
   padding: 21px;
-  border: 8px solid hsla(0, 0%, 100%, 0.38);
+  border: 8px solid hsla(0, 0%, 0%, 0.38);
   font-family: "Roboto Condensed", sans-serif;
   font-size: 78px;
   line-height: 60px;
@@ -1931,6 +1931,7 @@ p {
   bottom: 0px;
   border-top: 1px solid hsla(0, 0%, 100%, 0.34);
   text-align: center;
+  background-color: dimgray;
 }
 
 .footer-nav-link {
@@ -1973,11 +1974,11 @@ p {
   padding-top: 164px;
   padding-right: 15px;
   padding-left: 15px;
-  background-image: url("http://uploads.webflow.com/52f2c8085d8eed2b6b000300/52f2c9e2ba5496e141000305_waterfall.jpg");
+  background-image: url("../Images/bgimage.jpg");
   background-position: 91% 50%;
   background-size: cover;
   box-shadow: inset -3px 0 0 0 rgba(0, 0, 0, 0.28);
-  color: #fff;
+  color: black;
   text-align: center;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.64);
 }

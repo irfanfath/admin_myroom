@@ -9,6 +9,7 @@ export default class AddApart extends Component{
             this.state = {
                 post: [],
                 name: "",
+                startprice: "",
                 description: "",
                 facility: "",
                 image: null,
@@ -65,6 +66,7 @@ export default class AddApart extends Component{
           })
         const data = new FormData()
         data.append("name", this.state.name)
+        data.append("startprice", this.state.startprice)
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
         data.append("location", this.state.location)
@@ -109,6 +111,7 @@ export default class AddApart extends Component{
                             <div>
                                 <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})}/>
+                                <input className="field w-input" name="startprice" placeholder="Harga Minimum" required="required" type="text" onChange={(e) => this.setState({startprice: e.target.value})}/>
                                 <div className="lokasi-menu-list">
                                     <div className="title-lokasi">* List Lokasi Tersedia :</div>
                                         {
