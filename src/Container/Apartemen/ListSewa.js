@@ -148,6 +148,7 @@ class ListSewa extends Component {
                             <p>Lokasi : {data.location}</p>
                             <p>Fasilitas : {data.facility}</p>
                             <p>Dekripsi : {data.description}&nbsp;</p>
+                            <p>Harga Termurah : {data.startPrice}</p>
                             <div className="article-info-wrapper">
                                 <div className="article-info-text tag" onClick={() => this.handleMoveListUnit(data.id)}>List Unit</div>
                                 {/* <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)}>Edit Apartemen</div> */}
