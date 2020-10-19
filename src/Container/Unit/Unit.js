@@ -13,6 +13,7 @@ class Unit extends Component {
         activeItem: "1",
         sewaActive: true,
         showEdit: false,
+        // showEditStatus: false,
 
         //update unit
         apartmentId: localStorage.getItem('apart'),
@@ -146,6 +147,10 @@ class Unit extends Component {
         this.setState({showEdit: true})
     }
 
+    // handleMoveEditStatus = () => {
+    //     this.setState({showEditStatus: true})
+    // }
+
     handleCloseEdit = () => {
         this.setState({showEdit: false})
     }
@@ -185,7 +190,8 @@ class Unit extends Component {
                                                 <p>Status : {data.status}</p>
                                                 <div className="article-info-wrapper">
                                                     <div className="article-info-text">{data.unitCode}</div>
-                                                    <div className="article-info-text tag" onClick={this.handleMoveEdit} >Edit Unit</div>
+                                                    <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)} >Edit Unit</div>
+                                                    {/* <div className="article-info-text tag" onClick={this.handleMoveEditStatus} >Edit Status Unit</div> */}
                                                     <div className="article-info-text tag" onClick={() => this.handleDetail(data.id)}>Edit Harga</div>
                                                     <div className="article-info-text tag" onClick={() => this.handleRemoveRent(data.id)}>Hapus</div>
                                                 </div>
@@ -206,7 +212,7 @@ class Unit extends Component {
                                                                                 <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
                                                                                 </div>
                                                                                 <div className="margin-radio">
-                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
+                                                                                <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
                                                                                 </div>
                                                                             </div>
                                                                             <div>
@@ -223,6 +229,28 @@ class Unit extends Component {
                                                         </div> 
                                                     : null
                                                 }
+                                                {/* {
+                                                    this.state.showEditStatus? <div className="section">
+                                                        <div className="close-edit" onClick={this.handleCloseEdit}>x</div>
+                                                                <div className="section">
+                                                                    <h1>Edit Status Unit</h1>
+                                                                    <p>Halaman ini untuk merubah status unit</p>
+                                                                    <div className="form-wrapper w-form">
+                                                                        <div className="lokasi-menu-list">
+                                                                            <label htmlFor="status">Status Unit</label>
+                                                                            <div className="margin-radio">
+                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
+                                                                            </div>
+                                                                            <div className="margin-radio">
+                                                                                <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
+                                                                    </div>
+                                                                </div>
+                                                        </div> 
+                                                    : null
+                                                } */}
                                             </section>
                                         </div>
                                     )

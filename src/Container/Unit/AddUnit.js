@@ -18,22 +18,15 @@ export default class AddUnit extends Component{
                 feature: "",
                 image: null,
                 status: "",
-                images: null,
+                images: [],
+                files: null,
                 showLoader: false
             }
     }
 
     setFile = (images) => {
-        this.setState({ images })
-    }
-
-    componentDidMount(){
-        axios.get("https://cooperative-express.herokuapp.com/facilities")
-        .then((result)=>{
-            this.setState({
-                post: result.data,
-            })
-        })
+        console.log('images =>', images)
+        this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
     }
 
     handleSubmit = () => {
@@ -44,12 +37,13 @@ export default class AddUnit extends Component{
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
         data.append("feature", this.state.feature)
-        data.append("image", this.state.image)
+        // data.append("image", this.state.image)
         data.append("status", this.state.status)
-        data.append("images", this.state.images)
+        // data.append("images", this.state.images)
         data.append("apartmentId", this.state.apartmentId)
+        this.state.images.forEach((file) => data.append('images', file));
 
-        axios.post("https://api.ismyroom.com/units", data, {
+        axios.post("https://api.ismyroom.com/units/test", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "multipart/form-data"
@@ -78,7 +72,7 @@ export default class AddUnit extends Component{
       }
 
     render(){
-        const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
+        const label = this.state.images.length > 0? this.state.images[this.state.images.length -1].name : 'Klik atau drop gambar yang akan dimasukan disini';
         return(
             <div className="all-content w-clearfix">
                 <Sidebar/>
@@ -88,7 +82,6 @@ export default class AddUnit extends Component{
                         <h1>Tambah Unit Baru</h1>
                         <p>Halaman ini untuk menambahkan unit baru yang akan disewakan</p>
                         <div className="form-wrapper w-form">
-                                {/* <input className="field w-input" name="idapart" placeholder="Apartment Id" required="required" type="text" onChange={(e) => this.setState({apartmentId: e.target.value})} /> */}
                                 <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
@@ -103,7 +96,7 @@ export default class AddUnit extends Component{
                                     </div>
                                 </div>
                                 <div>
-                                    <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
+                                    <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
                                 </div>
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>

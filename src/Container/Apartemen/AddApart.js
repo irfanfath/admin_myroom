@@ -72,7 +72,7 @@ export default class AddApart extends Component{
         data.append("location", this.state.location)
         data.append("image", this.state.image)
 
-        axios.post("https://api.ismyroom.com/apartments", data, {
+        axios.post("https://api.ismyroom.com/apartments/test", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "multipart/form-data"
