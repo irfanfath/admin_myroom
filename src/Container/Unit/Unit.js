@@ -3,29 +3,54 @@ import axios from "axios";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import Header from "../../Component/Navigation/Header";
 import { MDBTabContent, MDBTabPane } from "mdbreact";
-import { StyledDropZone } from 'react-drop-zone'
+// import { StyledDropZone } from 'react-drop-zone'
 import 'react-drop-zone/dist/styles.css'
 
 class Unit extends Component {
-    state = {
-        post: [],
-        postSell: [],
-        activeItem: "1",
-        sewaActive: true,
-        showEdit: false,
-        // showEditStatus: false,
+    constructor(props){
+        super(props)
 
-        //update unit
-        apartmentId: localStorage.getItem('apart'),
-        unitCode: "",
-        name: "",
-        description: "",
-        facility: "",
-        feature: "",
-        image: null,
-        status: "",
-        images: null,
+        this.payload = {
+            apartmentId: localStorage.getItem('apart'),
+        }
+
+        this.state = {
+            post: [],
+            postSell: [],
+            activeItem: "1",
+            sewaActive: true,
+            showEdit: false,
+
+            //update unit
+            // apartmentId: localStorage.getItem('apart'),
+            // unitCode: "",
+            // name: "",
+            // description: "",
+            // facility: "",
+            // feature: "",
+            // image: null,
+            // status: "",
+            // images: null,
+        }
     }
+    // state = {
+    //     post: [],
+    //     postSell: [],
+    //     activeItem: "1",
+    //     sewaActive: true,
+    //     showEdit: false,
+
+    //     //update unit
+    //     apartmentId: localStorage.getItem('apart'),
+    //     unitCode: "",
+    //     name: "",
+    //     description: "",
+    //     facility: "",
+    //     feature: "",
+    //     image: null,
+    //     status: "",
+    //     images: null,
+    // }
     
     setFile = (images) => {
         this.setState({ images })
@@ -49,18 +74,6 @@ class Unit extends Component {
         this.setState({
             filtered: this.state.post
         });
-        
-        // let id = this.props.match.params.idApart
-        // axios.get(`https://api.ismyroom.com/units?filter=rent`)
-        // .then((res) =>{
-        //     const arrData = res.data
-        //     for (let i = 0; i < arrData.length; i++) {
-        //         if(arrData[i].apartmentId === parseInt(id)){
-        //             this.setState({post: [...this.state.post, arrData[i]]})
-        //         }
-        //     }
-        //     // localStorage.setItem('apart', this.state.post[0].apartmentId);
-        // })
         this.handlGetSell()
     }
 
@@ -91,21 +104,36 @@ class Unit extends Component {
     }
 
     handleUpdate = (id) => {
-        const data = new FormData()
-        data.append("unitCode", this.state.unitCode)
-        data.append("name", this.state.name)
-        data.append("description", this.state.description)
-        data.append("facility", this.state.facility)
-        data.append("feature", this.state.feature)
-        data.append("image", this.state.image)
-        data.append("status", this.state.status)
-        data.append("images", this.state.images)
-        data.append("apartmentId", this.state.apartmentId)
+        // const data = new FormData()
+        // data.append("unitCode", this.state.unitCode)
+        // data.append("name", this.state.name)
+        // data.append("description", this.state.description)
+        // data.append("facility", this.state.facility)
+        // data.append("feature", this.state.feature)
+        // data.append("image", this.state.image)
+        // data.append("status", this.state.status)
+        // data.append("images", this.state.images)
+        // data.append("apartmentId", this.state.apartmentId)
 
-        axios.patch(`https://api.ismyroom.com/units/${id}`, data, {
+        // axios.patch(`https://api.ismyroom.com/units/${id}`, data, {
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //         "Content-Type": "multipart/form-data"
+        //     }
+        // }).then((res) => {
+        //     console.log(res)
+        //     if(res.status === 200){
+        //         alert("berhasil memperbarui data")
+        //     }else {
+        //         alert("gagal memperbarui data")
+        //     }
+        //     this.handlGetRent()
+        // })
+        const data = JSON.stringify(this.payload)
+        axios.patch(`https://api.ismyroom.com/units/test/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "multipart/form-data"
+                "Content-Type": "application/json"
             }
         }).then((res) => {
             console.log(res)
@@ -114,8 +142,7 @@ class Unit extends Component {
             }else {
                 alert("gagal memperbarui data")
             }
-            this.handlGetRent()
-        })
+        }).catch((err) => console.log(err))
     }
 
     handleRemoveRent = (id) => {
@@ -132,7 +159,6 @@ class Unit extends Component {
                 alert("gagal menghapus data")
             }
         }) 
-        this.handlGetRent()
     }
 
     handleMoveAdd = () => {
@@ -146,10 +172,6 @@ class Unit extends Component {
     handleMoveEdit = () => {
         this.setState({showEdit: true})
     }
-
-    // handleMoveEditStatus = () => {
-    //     this.setState({showEditStatus: true})
-    // }
 
     handleCloseEdit = () => {
         this.setState({showEdit: false})
@@ -191,7 +213,6 @@ class Unit extends Component {
                                                 <div className="article-info-wrapper">
                                                     <div className="article-info-text">{data.unitCode}</div>
                                                     <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)} >Edit Unit</div>
-                                                    {/* <div className="article-info-text tag" onClick={this.handleMoveEditStatus} >Edit Status Unit</div> */}
                                                     <div className="article-info-text tag" onClick={() => this.handleDetail(data.id)}>Edit Harga</div>
                                                     <div className="article-info-text tag" onClick={() => this.handleRemoveRent(data.id)}>Hapus</div>
                                                 </div>
@@ -202,55 +223,29 @@ class Unit extends Component {
                                                                     <h1>Edit Unit</h1>
                                                                     <p>Halaman ini untuk merubah unit</p>
                                                                     <div className="form-wrapper w-form">
-                                                                            <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
-                                                                            <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
-                                                                            <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
-                                                                            <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
+                                                                            <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.payload.name = e.target.value} />
+                                                                            <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.payload.unitCode = e.target.value} />
+                                                                            <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.payload.facility = e.target.value} />
+                                                                            <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.payload.feature = e.target.value} />
                                                                             <div className="lokasi-menu-list">
                                                                                 <label htmlFor="status">Status Unit</label>
                                                                                 <div className="margin-radio">
-                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
+                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.payload.status = e.target.value} /><div className="title-radio-lokasi">Tersedia</div>
                                                                                 </div>
                                                                                 <div className="margin-radio">
-                                                                                <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
+                                                                                <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.payload.status = e.target.value} /><div className="title-radio-lokasi">Tersewa</div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div>
+                                                                            {/* <div>
                                                                                 <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
-                                                                            </div>
-                                                                            <div className="lokasi-menu-list">
-                                                                                <label htmlFor="mainimage">Gambar Utama</label>
-                                                                                <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
-                                                                            </div>
-                                                                            <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                                                            </div> */}
+                                                                            <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.payload.description = e.target.value}></textarea>
                                                                             <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
                                                                     </div>
                                                                 </div>
                                                         </div> 
                                                     : null
                                                 }
-                                                {/* {
-                                                    this.state.showEditStatus? <div className="section">
-                                                        <div className="close-edit" onClick={this.handleCloseEdit}>x</div>
-                                                                <div className="section">
-                                                                    <h1>Edit Status Unit</h1>
-                                                                    <p>Halaman ini untuk merubah status unit</p>
-                                                                    <div className="form-wrapper w-form">
-                                                                        <div className="lokasi-menu-list">
-                                                                            <label htmlFor="status">Status Unit</label>
-                                                                            <div className="margin-radio">
-                                                                                <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
-                                                                            </div>
-                                                                            <div className="margin-radio">
-                                                                                <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
-                                                                    </div>
-                                                                </div>
-                                                        </div> 
-                                                    : null
-                                                } */}
                                             </section>
                                         </div>
                                     )
@@ -282,28 +277,21 @@ class Unit extends Component {
                                                                 <h1>Edit Unit</h1>
                                                                 <p>Halaman ini untuk merubah unit</p>
                                                                 <div className="form-wrapper w-form">
-                                                                        <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
-                                                                        <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
-                                                                        <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
-                                                                        <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
-                                                                        <div className="lokasi-menu-list">
-                                                                            <label htmlFor="status">Status Unit</label>
-                                                                            <div className="margin-radio">
-                                                                            <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersedia</div>
-                                                                            </div>
-                                                                            <div className="margin-radio">
-                                                                            <input type="radio" value="sold" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Terjual</div>
-                                                                            </div>
+                                                                    <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.payload.name = e.target.value} />
+                                                                    <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.payload.unitCode = e.target.value} />
+                                                                    <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.payload.facility = e.target.value} />
+                                                                    <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.payload.feature = e.target.value} />
+                                                                    <div className="lokasi-menu-list">
+                                                                        <label htmlFor="status">Status Unit</label>
+                                                                        <div className="margin-radio">
+                                                                            <input type="radio" value="available" name="status" className="radio-menu-lokasi" onChange={(e) => this.payload.status = e.target.value} /><div className="title-radio-lokasi">Tersedia</div>
                                                                         </div>
-                                                                        <div>
-                                                                            <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
+                                                                        <div className="margin-radio">
+                                                                            <input type="radio" value="sold" name="status" className="radio-menu-lokasi" onChange={(e) => this.payload.status = e.target.value} /><div className="title-radio-lokasi">Terjual</div>
                                                                         </div>
-                                                                        <div className="lokasi-menu-list">
-                                                                            <label htmlFor="mainimage">Gambar Utama</label>
-                                                                            <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
-                                                                        </div>
-                                                                        <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                                                        <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
+                                                                    </div>
+                                                                    <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.payload.description = e.target.value}></textarea>
+                                                                    <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
                                                                 </div>
                                                             </div>
                                                     </div> 

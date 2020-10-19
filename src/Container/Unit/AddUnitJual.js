@@ -19,23 +19,14 @@ export default class AddUnitJual extends Component{
                 feature: "",
                 image: null,
                 status: "",
-                images: null,
+                images: [],
+                files: null,
                 showLoader: false
             }
     }
 
     setFile = (images) => {
-        this.setState({ images })
-      }
-
-
-    componentDidMount(){
-        axios.get("https://cooperative-express.herokuapp.com/facilities")
-        .then((result)=>{
-            this.setState({
-                post: result.data,
-            })
-        })
+        this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
     }
 
     handleSubmit = () => {
@@ -46,12 +37,11 @@ export default class AddUnitJual extends Component{
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
         data.append("feature", this.state.feature)
-        data.append("image", this.state.image)
         data.append("status", this.state.status)
-        data.append("images", this.state.images)
         data.append("apartmentId", this.state.apartmentId)
+        this.state.images.forEach((file) => data.append('images', file));
 
-        axios.post("https://api.ismyroom.com/units", data, {
+        axios.post("https://api.ismyroom.com/units/test", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "multipart/form-data"
@@ -79,7 +69,7 @@ export default class AddUnitJual extends Component{
       }
 
     render(){
-        const label = this.state.images? this.state.images.name : 'Klik atau drop gambar yang akan dimasukan disini';
+        const label = this.state.images.length > 0? this.state.images[this.state.images.length -1].name : 'Klik atau drop gambar yang akan dimasukan disini';
         return(
             <div className="all-content w-clearfix">
                 <Sidebar/>
@@ -102,12 +92,8 @@ export default class AddUnitJual extends Component{
                                     <input type="radio" value="sold" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Terjual</div>
                                     </div>
                                 </div>
-                                <div>
-                                    <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
-                                </div>
                                 <div className="lokasi-menu-list">
-                                    <label htmlFor="mainimage">Gambar Utama</label>
-                                    <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
+                                    <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />                                  

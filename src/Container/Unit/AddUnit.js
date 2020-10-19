@@ -37,9 +37,7 @@ export default class AddUnit extends Component{
         data.append("description", this.state.description)
         data.append("facility", this.state.facility)
         data.append("feature", this.state.feature)
-        // data.append("image", this.state.image)
         data.append("status", this.state.status)
-        // data.append("images", this.state.images)
         data.append("apartmentId", this.state.apartmentId)
         this.state.images.forEach((file) => data.append('images', file));
 
@@ -53,7 +51,6 @@ export default class AddUnit extends Component{
             if(res.status === 201){
                 alert("Silahkan masukan harga")
                 this.setState({showLoader: false})
-                // this.setState({showHarga: true})
                 localStorage.setItem('idharga', res.data.id);
                 this.props.history.push('/hargaunit')
             }else {
@@ -98,10 +95,6 @@ export default class AddUnit extends Component{
                                 <div className="lokasi-menu-list">
                                     <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
                                 </div>
-                                {/* <div className="lokasi-menu-list">
-                                    <label htmlFor="mainimage">Gambar Utama</label>
-                                    <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
-                                </div> */}
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
                                 {
