@@ -39,7 +39,7 @@ export default class EditApart extends Component{
             "image": this.state.image
         }
         const data = payload
-        axios.patch(`https://api.ismyroom.com/apartments/${id}`, data, {
+        axios.patch(`https://api.ismyroom.com/apartments/test/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -55,30 +55,6 @@ export default class EditApart extends Component{
             this.getPostApi()
         })
     }
-
-    // handleSubmit = () => {
-    //     const data = new FormData()
-
-    //     data.append("name", this.state.name)
-    //     data.append("description", this.state.description)
-    //     data.append("facility", this.state.facility)
-    //     data.append("location", this.state.location)
-    //     data.append("image", this.state.image)
-
-    //     axios.post("https://api.ismyroom.com/apartments", data, {
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             "Content-Type": "multipart/form-data"
-    //         }
-    //     }).then((res) => {
-    //         console.log(res)
-    //         if(res.status === 200){
-    //             alert("berhasil menambahkan data")
-    //         }else {
-    //             alert("gagal menambahkan data")
-    //         }
-    //     })
-    // }
 
     render(){
         return(

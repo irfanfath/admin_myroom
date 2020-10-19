@@ -95,13 +95,13 @@ export default class AddUnit extends Component{
                                     <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.setState({status: e.target.value})} /><div className="title-radio-lokasi">Tersewa</div>
                                     </div>
                                 </div>
-                                <div>
+                                <div className="lokasi-menu-list">
                                     <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
                                 </div>
-                                <div className="lokasi-menu-list">
+                                {/* <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>
                                     <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})}/>
-                                </div>
+                                </div> */}
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
                                 {

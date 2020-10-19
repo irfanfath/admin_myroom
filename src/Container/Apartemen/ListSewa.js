@@ -4,15 +4,23 @@ import Sidebar from "../../Component/Navigation/Sidebar";
 import Header from "../../Component/Navigation/Header";
  
 class ListSewa extends Component {
-    state = {
-        post: [],
-        name: "",
-        description: "",
-        facility: "",
-        image: null,
-        location: "",
-        showEdit: false,
-        showLoader: false
+    constructor(props){
+        super(props)
+
+        this.payload = {}
+
+        this.state = {
+            post: [],
+            name: "",
+            startPrice: "",
+            description: "",
+            facility: "",
+            image: null,
+            location: "",
+            showEdit: false,
+            showLoader: false, 
+            payload: {}
+        }
     }
 
     getPostApi = () => {
@@ -77,14 +85,20 @@ class ListSewa extends Component {
         this.setState({
             showLoader: true
         })
-        const data = new FormData()
-        data.append("name", this.state.name)
-        data.append("description", this.state.description)
-        data.append("facility", this.state.facility)
-        data.append("location", this.state.location)
-        data.append("image", this.state.image)
+        
+        let data = new FormData()
+        for ( var key in this.payload ) {
+            data.append(key, this.payload[key]);
+        }
+        // data = this.payload
+        // data.append("name", this.state.name)
+        // data.append("description", this.state.description)
+        // data.append("facility", this.state.facility)
+        // data.append("location", this.state.location)
+        // data.append("image", this.state.image)
+        console.log(data)
 
-        axios.patch(`https://api.ismyroom.com/apartments/${id}`, data, {
+        axios.patch(`https://api.ismyroom.com/apartments/test/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "multipart/form-data"
@@ -99,7 +113,7 @@ class ListSewa extends Component {
                 this.setState({showLoader: false})
             }
             this.getPostApi()
-        })
+        }).catch((err) => console.log(err))
     }
 
     handleMoveListUnit = (id) => {
@@ -163,14 +177,15 @@ class ListSewa extends Component {
                                 <p>Halaman ini untuk merubah data apartemen</p>
                                 <div className="form-wrapper w-form">
                                     <div>
-                                        <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text"  onChange={(e) => this.setState({name: e.target.value})} />
-                                        <textarea className="big field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})}/>
-                                        <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text"  onChange={(e) => this.setState({location: e.target.value})}/>
+                                        <input className="field w-input" name="nama" placeholder="Nama Apartemen" required="required" type="text"  onChange={(e) => this.payload.name = e.target.value} />
+                                        <input className="field w-input" name="nama" placeholder="Harga Terendah" required="required" type="text"  onChange={(e) => this.payload.startPrice = e.target.value} />
+                                        <textarea className="big field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.payload.facility = e.target.value}/>
+                                        <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text"  onChange={(e) => this.payload.facility = e.target.value}/>
                                         <div className="lokasi-menu-list">
                                             <label htmlFor="mainimage">Gambar Utama</label>
-                                            <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
+                                            <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.payload.image = e.target.files[0]} />
                                         </div>
-                                        <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                        <textarea className="big field w-input" name="description" placeholder="Deskripsi" required="required" onChange={(e) => this.payload.description = e.target.value}></textarea>
                                         <input className="button w-button" type="submit" value="Edit Apartemen" onClick={() => this.handleUpdate(data.id)} />
                                         {
                                             this.state.showLoader ? <this.LoaderModal /> : null

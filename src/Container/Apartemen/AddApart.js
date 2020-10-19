@@ -31,35 +31,6 @@ export default class AddApart extends Component{
         })
     }
 
-    // handleSubmit = () => {
-    //     const payload = {
-    //         "name" : this.state.name,
-    //         "description" : this.state.description,
-    //         "facility" : this.state.facility,
-    //         // "image" : this.state.image,
-    //         "location" : this.state.location
-    //     }
-    //     const imageData = new FormData()
-    //     imageData.append("image", this.state.image)
-    //     const data = payload
-    //     axios.post("https://api.ismyroom.com/apartments", data, imageData, {
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //             Accept: "application/json",
-    //             "Content-Type": "multipart/form-data"
-    //         }
-    //     }).then((res) => {
-    //         console.log(res)
-    //         if(res.status === 201){
-    //             alert("berhasil menambahkan data")
-    //         }else {
-    //             alert("gagal menambahkan data")
-    //         }
-    //         this.getPostApi()
-    //     })
-    // }
-
-
     handleSubmit = () => {
         this.setState({
             showLoader: true
@@ -131,7 +102,6 @@ export default class AddApart extends Component{
                                     }
                                      <button type="button" onClick={this.onSubmit} className="btn">Save</button> */}
                                 </div>
-                                {/* <input className="field w-input" name="gambar" placeholder="Gambar" required="required" type="text" onChange={(e) => this.setState({image: e.target.value})}/> */}
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>
                                     <input className="field w-input" name="image" required="required" type="file" onChange={(e) => this.setState({image: e.target.files[0]})} />
