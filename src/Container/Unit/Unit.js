@@ -3,54 +3,22 @@ import axios from "axios";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import Header from "../../Component/Navigation/Header";
 import { MDBTabContent, MDBTabPane } from "mdbreact";
-// import { StyledDropZone } from 'react-drop-zone'
 import 'react-drop-zone/dist/styles.css'
 
 class Unit extends Component {
     constructor(props){
         super(props)
-
         this.payload = {
             apartmentId: localStorage.getItem('apart'),
         }
-
         this.state = {
             post: [],
             postSell: [],
             activeItem: "1",
             sewaActive: true,
             showEdit: false,
-
-            //update unit
-            // apartmentId: localStorage.getItem('apart'),
-            // unitCode: "",
-            // name: "",
-            // description: "",
-            // facility: "",
-            // feature: "",
-            // image: null,
-            // status: "",
-            // images: null,
         }
     }
-    // state = {
-    //     post: [],
-    //     postSell: [],
-    //     activeItem: "1",
-    //     sewaActive: true,
-    //     showEdit: false,
-
-    //     //update unit
-    //     apartmentId: localStorage.getItem('apart'),
-    //     unitCode: "",
-    //     name: "",
-    //     description: "",
-    //     facility: "",
-    //     feature: "",
-    //     image: null,
-    //     status: "",
-    //     images: null,
-    // }
     
     setFile = (images) => {
         this.setState({ images })
@@ -104,31 +72,6 @@ class Unit extends Component {
     }
 
     handleUpdate = (id) => {
-        // const data = new FormData()
-        // data.append("unitCode", this.state.unitCode)
-        // data.append("name", this.state.name)
-        // data.append("description", this.state.description)
-        // data.append("facility", this.state.facility)
-        // data.append("feature", this.state.feature)
-        // data.append("image", this.state.image)
-        // data.append("status", this.state.status)
-        // data.append("images", this.state.images)
-        // data.append("apartmentId", this.state.apartmentId)
-
-        // axios.patch(`https://api.ismyroom.com/units/${id}`, data, {
-        //     headers: {
-        //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //         "Content-Type": "multipart/form-data"
-        //     }
-        // }).then((res) => {
-        //     console.log(res)
-        //     if(res.status === 200){
-        //         alert("berhasil memperbarui data")
-        //     }else {
-        //         alert("gagal memperbarui data")
-        //     }
-        //     this.handlGetRent()
-        // })
         const data = JSON.stringify(this.payload)
         axios.patch(`https://api.ismyroom.com/units/test/${id}`, data, {
             headers: {
@@ -236,9 +179,6 @@ class Unit extends Component {
                                                                                 <input type="radio" value="rented" name="status" className="radio-menu-lokasi" onChange={(e) => this.payload.status = e.target.value} /><div className="title-radio-lokasi">Tersewa</div>
                                                                                 </div>
                                                                             </div>
-                                                                            {/* <div>
-                                                                                <StyledDropZone onDrop={this.setFile} onChange={(e) => this.setState({images: e.target.files[0]})}>{label}</StyledDropZone>
-                                                                            </div> */}
                                                                             <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.payload.description = e.target.value}></textarea>
                                                                             <input className="button w-button" type="submit" value="Update Data" onClick={() => this.handleUpdate(data.id)} />
                                                                     </div>

@@ -91,16 +91,6 @@ export default class AddApart extends Component{
                                             )
                                         }
                                     <input className="field w-input" name="lokasi" placeholder="Lokasi" required="required" type="text" onChange={(e) => this.setState({location: e.target.value})}/>
-                                    {/* {
-                                        this.state.post.map((data,key) => {
-                                            return (
-                                                <div className="margin-radio" key={key}>
-                                                    <input type="radio" value={data.id} name="locationId" className="radio-menu-lokasi" onChange={(e) => this.setState({locationId: e.target.value})} /><div className="title-radio-lokasi">{data.name}</div>
-                                                </div> 
-                                            )
-                                        })
-                                    }
-                                     <button type="button" onClick={this.onSubmit} className="btn">Save</button> */}
                                 </div>
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="mainimage">Gambar Utama</label>

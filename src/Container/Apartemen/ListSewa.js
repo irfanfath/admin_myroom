@@ -165,10 +165,8 @@ class ListSewa extends Component {
                             <p>Harga Termurah : {data.startPrice}</p>
                             <div className="article-info-wrapper">
                                 <div className="article-info-text tag" onClick={() => this.handleMoveListUnit(data.id)}>List Unit</div>
-                                {/* <div className="article-info-text tag" onClick={() => this.handleMoveEdit(data.id)}>Edit Apartemen</div> */}
                                 <div className="article-info-text tag" onClick={this.handleMoveEdit}>Edit Apartemen</div>
                                 <div className="article-info-text tag" onClick={() => this.handleRemove(data.id)}>Hapus Apartemen</div>
-                                {/* <input className="button-edit w-button" type="submit" value="List Unit" onClick={() => this.handleMoveListUnit(data.id)}/> */}
                             </div>
                             {
                                 this.state.showEdit? <div className="section">
