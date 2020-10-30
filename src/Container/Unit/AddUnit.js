@@ -4,12 +4,14 @@ import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
 import { StyledDropZone } from 'react-drop-zone'
 import 'react-drop-zone/dist/styles.css'
+import Dropzone from "../../Component/Dropzone/Dropzone"
 
 export default class AddUnit extends Component{
     constructor(props){
         super()
             this.state = {
                 post: [],
+                postFacilities: [],
                 apartmentId: localStorage.getItem('apart'),
                 unitCode: "",
                 name: "",
@@ -20,8 +22,18 @@ export default class AddUnit extends Component{
                 status: "",
                 images: [],
                 files: null,
-                showLoader: false
+                showLoader: false,
             }
+    }
+
+    componentDidMount(){
+        axios.get("https://api.ismyroom.com/facilities")
+        .then((result)=>{
+            this.setState({
+                postFacilities: result.data
+            })
+            console.log(result.data)
+        }) 
     }
 
     setFile = (images) => {
@@ -59,6 +71,14 @@ export default class AddUnit extends Component{
             }
         })
     }
+
+    dosomething = (name) => {
+        var newstate = name + "<br/>";
+        this.setState({
+            facility: [...this.state.facility, newstate]
+        })
+        // console.log(newstate)
+    }
     
     LoaderModal = () => {
         return (
@@ -81,7 +101,17 @@ export default class AddUnit extends Component{
                         <div className="form-wrapper w-form">
                                 <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
-                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
+                                <div className="lokasi-menu-list">
+                                    <label htmlFor="status">Fasilitas</label>
+                                    {
+                                        this.state.postFacilities.map((data,key)=> 
+                                            <div className="margin-radio" key={key}>
+                                                <button name="facility" className="button w-button" onClick={()=> this.dosomething(data.name)}>{data.name}</button>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => this.setState({facility: e.target.value})} readOnly />
                                 <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
@@ -96,6 +126,9 @@ export default class AddUnit extends Component{
                                     <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
+                                {/* <div className="lokasi-menu-list">
+                                    <Dropzone dropimg={this.setFile}/>
+                                </div> */}
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
                                 {
                                     this.state.showLoader ? <this.LoaderModal /> : null

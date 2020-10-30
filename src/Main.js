@@ -21,6 +21,7 @@ import AddUnitJual from "./Container/Unit/AddUnitJual";
 import HargaUnit from "./Container/Unit/HargaUnit";
 import HargaUnitJual from "./Container/Unit/HargaUnitJual";
 import DetailUnitJual from "./Container/Unit/DetailUnitJual";
+import AddImage from "./Container/Unit/AddImage";
 
 class Main extends Component {
     render(){
@@ -47,6 +48,7 @@ class Main extends Component {
                     <Route path="/hargaunit" component={HargaUnit}/>
                     <Route path="/hargaunitjual" component={HargaUnitJual}/>
                     <Route path="/addunitjual" component={AddUnitJual}/>
+                    <Route path="/addimage" component={AddImage}/>
             </HashRouter>
         )
     }
