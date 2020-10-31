@@ -23,7 +23,9 @@ export default class AddUnit extends Component{
                 images: [],
                 files: null,
                 showLoader: false,
+                file: null
             }
+            this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount(){
@@ -40,6 +42,12 @@ export default class AddUnit extends Component{
         console.log('images =>', images)
         this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
     }
+
+    handleChange(event) {
+        this.setState({
+          file: URL.createObjectURL(event.target.files[0])
+        })
+      }
 
     handleSubmit = () => {
         this.setState({showLoader: true})
@@ -111,7 +119,8 @@ export default class AddUnit extends Component{
                                         )
                                     }
                                 </div>
-                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => this.setState({facility: e.target.value})} readOnly />
+                                {/* <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => this.setState({facility: e.target.value})} /> */}
+                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => console.log(e.target.value)} />
                                 <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
@@ -123,12 +132,17 @@ export default class AddUnit extends Component{
                                     </div>
                                 </div>
                                 <div className="lokasi-menu-list">
-                                    <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
+                                    <StyledDropZone onDrop={this.setFile} onChange={this.handleChange}>{label}</StyledDropZone>
+                                    {/* <input type="file" onChange={this.handleChange} />
+                                    <img src={this.state.file}/> */}
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                {/* <div className="lokasi-menu-list">
-                                    <Dropzone dropimg={this.setFile}/>
-                                </div> */}
+                                <div className="lokasi-menu-list">
+                                    <Dropzone dropimg={this.setFile} />
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
                                 {
                                     this.state.showLoader ? <this.LoaderModal /> : null

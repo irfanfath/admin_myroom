@@ -53,11 +53,6 @@ const Dropzone = () => {
         }
     }
 
-    const setFile = (images) => {
-        console.log('images =>', images)
-        this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
-    }
-
     const filesSelected = () => {
         if (fileInputRef.current.files.length) {
             handleFiles(fileInputRef.current.files);
