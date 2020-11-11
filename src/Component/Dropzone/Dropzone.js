@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dropzone.css';
+import {buffArrImage} from '../../Container/Unit/BufferImages'
 
 
-const Dropzone = () => {
+const Dropzone = (props) => {
     const fileInputRef = useRef();
     const modalImageRef = useRef();
     const modalRef = useRef();
@@ -14,6 +15,7 @@ const Dropzone = () => {
     const [validFiles, setValidFiles] = useState([]);
     const [unsupportedFiles, setUnsupportedFiles] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [arrImage, setArrImage] = useState([])
 
     useEffect(() => {
         let filteredArr = selectedFiles.reduce((acc, current) => {
@@ -27,6 +29,13 @@ const Dropzone = () => {
         setValidFiles([...filteredArr]);
         
     }, [selectedFiles]);
+
+
+    // useEffect(() => {
+    //     console.log('kirim gambar')
+    //     props.onSendImages(image)
+    // }, [image, props])
+
 
     const preventDefault = (e) => {
         e.preventDefault();
@@ -64,6 +73,9 @@ const Dropzone = () => {
     }
 
     const handleFiles = (files) => {
+        setArrImage([...arrImage, files[0]])
+        // setImage(files[0])
+        buffArrImage.images.push(files[0])
         for(let i = 0; i < files.length; i++) {
             if (validateFile(files[i])) {
                 setSelectedFiles(prevArray => [...prevArray, files[i]]);

@@ -17,7 +17,7 @@ class Facility extends Component {
     }
 
     getPostApi = () => {
-        axios.get("https://cooperative-express.herokuapp.com/facilities")
+        axios.get("https://api.ismyroom.com/facilities")
         .then((result)=>{
             this.setState({
                 post: result.data
@@ -32,7 +32,7 @@ class Facility extends Component {
         }
         const data = payload
         // data.append("name", this.state.name)
-        axios.post("https://cooperative-express.herokuapp.com/facilities", data, {
+        axios.post("https://api.ismyroom.com/facilities", data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
@@ -50,7 +50,7 @@ class Facility extends Component {
     }
 
     handleRemove = (id) => {
-        axios.delete(`https://cooperative-express.herokuapp.com/facilities/${id}`, {
+        axios.delete(`https://api.ismyroom.com/facilities/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",

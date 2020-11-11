@@ -3,8 +3,9 @@ import Header from "../../Component/Navigation/Header";
 import Sidebar from "../../Component/Navigation/Sidebar";
 import axios from "axios";
 import { StyledDropZone } from 'react-drop-zone'
-import 'react-drop-zone/dist/styles.css'
+import 'react-drop-zone/dist/styles.css';
 import Dropzone from "../../Component/Dropzone/Dropzone"
+import { buffArrImage } from "./BufferImages";
 
 export default class AddUnit extends Component{
     constructor(props){
@@ -23,9 +24,7 @@ export default class AddUnit extends Component{
                 images: [],
                 files: null,
                 showLoader: false,
-                file: null
             }
-            this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount(){
@@ -40,14 +39,10 @@ export default class AddUnit extends Component{
 
     setFile = (images) => {
         console.log('images =>', images)
-        this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
-    }
+        this.setState({ images : [...this.state.images, images], file: URL.createObjectURL(images)}, () => console.log('state.images =>', this.state.images))
+        // this.setState({ images : [...this.state.images, images]}, () => console.log('state.images =>', this.state.images))
 
-    handleChange(event) {
-        this.setState({
-          file: URL.createObjectURL(event.target.files[0])
-        })
-      }
+    }
 
     handleSubmit = () => {
         this.setState({showLoader: true})
@@ -59,7 +54,11 @@ export default class AddUnit extends Component{
         data.append("feature", this.state.feature)
         data.append("status", this.state.status)
         data.append("apartmentId", this.state.apartmentId)
-        this.state.images.forEach((file) => data.append('images', file));
+        if(buffArrImage.images.length > 0){
+            buffArrImage.images.forEach((file) => data.append('images', file));
+        }else{
+            this.state.images.forEach((file) => data.append('images', file));
+        }
 
         axios.post("https://api.ismyroom.com/units/test", data, {
             headers: {
@@ -70,6 +69,7 @@ export default class AddUnit extends Component{
             console.log(res)
             if(res.status === 201){
                 alert("Silahkan masukan harga")
+                buffArrImage.images = []
                 this.setState({showLoader: false})
                 localStorage.setItem('idharga', res.data.id);
                 this.props.history.push('/hargaunit')
@@ -81,13 +81,12 @@ export default class AddUnit extends Component{
     }
 
     dosomething = (name) => {
-        var newstate = name + "<br/>";
+        var newstate = name;
         this.setState({
             facility: [...this.state.facility, newstate]
         })
-        // console.log(newstate)
     }
-    
+
     LoaderModal = () => {
         return (
             <div id="posisi-loader">
@@ -119,9 +118,8 @@ export default class AddUnit extends Component{
                                         )
                                     }
                                 </div>
-                                {/* <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => this.setState({facility: e.target.value})} /> */}
-                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => console.log(e.target.value)} />
-                                <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
+                                <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" defaultValue={this.state.facility} onChange={(e) => this.setState({facility: e.target.value})} readOnly />
+                                <input className="field w-input" name="feature" placeholder="Type Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
                                 <div className="lokasi-menu-list">
                                     <label htmlFor="status">Status Unit</label>
                                     <div className="margin-radio">
@@ -132,18 +130,14 @@ export default class AddUnit extends Component{
                                     </div>
                                 </div>
                                 <div className="lokasi-menu-list">
-                                    <StyledDropZone onDrop={this.setFile} onChange={this.handleChange}>{label}</StyledDropZone>
-                                    {/* <input type="file" onChange={this.handleChange} />
+                                    {/* <StyledDropZone onDrop={this.setFile}>{label}</StyledDropZone>
                                     <img src={this.state.file}/> */}
+                                    <Dropzone/>
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                                <div className="lokasi-menu-list">
-                                    <Dropzone dropimg={this.setFile} />
-                                </div>
-                                <br/>
-                                <br/>
-                                <br/>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />
+                                <button onClick={this.testBuffer}>test</button>
+
                                 {
                                     this.state.showLoader ? <this.LoaderModal /> : null
                                 }

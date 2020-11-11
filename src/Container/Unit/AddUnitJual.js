@@ -11,6 +11,7 @@ export default class AddUnitJual extends Component{
         super()
             this.state = {
                 post: [],
+                postFacilities: [],
                 apartmentId: localStorage.getItem('apart'),
                 unitCode: "",
                 name: "",
@@ -25,8 +26,21 @@ export default class AddUnitJual extends Component{
             }
     }
 
+    componentDidMount(){
+        axios.get("https://api.ismyroom.com/facilities")
+        .then((result)=>{
+            this.setState({
+                postFacilities: result.data
+            })
+            console.log(result.data)
+        }) 
+    }
+
     setFile = (images) => {
-        this.setState({ images : [...this.state.images, images] }, () => console.log('state.images =>', this.state.images))
+        console.log('images =>', images)
+        this.setState({ images : [...this.state.images, images], file: URL.createObjectURL(images)}, () => console.log('state.images =>', this.state.images))
+        // this.setState({ images : [...this.state.images, images]}, () => console.log('state.images =>', this.state.images))
+
     }
 
     handleSubmit = () => {
@@ -60,6 +74,13 @@ export default class AddUnitJual extends Component{
         })
     }
 
+    dosomething = (name) => {
+        var newstate = name;
+        this.setState({
+            facility: [...this.state.facility, newstate]
+        })
+    }
+
     LoaderModal = () => {
         return (
             <div id="posisi-loader">
@@ -77,10 +98,20 @@ export default class AddUnitJual extends Component{
                     <Header/>
                     <div className="section">
                         <h1>Tambah Unit Baru</h1>
-                        <p>Halaman ini untuk menambahkan unit baru yang akan disewakan</p>
+                        <p>Halaman ini untuk menambahkan unit baru yang akan dijual</p>
                         <div className="form-wrapper w-form">
                                 <input className="field w-input" name="nama" placeholder="Nama Unit" required="required" type="text" onChange={(e) => this.setState({name: e.target.value})} />
                                 <input className="field w-input" name="kode" placeholder="Kode Unit" required="required" type="text" onChange={(e) => this.setState({unitCode: e.target.value})} />
+                                <div className="lokasi-menu-list">
+                                    <label htmlFor="status">Fasilitas</label>
+                                    {
+                                        this.state.postFacilities.map((data,key)=> 
+                                            <div className="margin-radio" key={key}>
+                                                <button name="facility" className="button w-button" onClick={()=> this.dosomething(data.name)}>{data.name}</button>
+                                            </div>
+                                        )
+                                    }
+                                </div>
                                 <input className="field w-input" name="facility" placeholder="Fasilitas" required="required" type="text" onChange={(e) => this.setState({facility: e.target.value})} />
                                 <input className="field w-input" name="feature" placeholder="Kelengkapan Unit" required="required" type="text" onChange={(e) => this.setState({feature: e.target.value})} />
                                 <div className="lokasi-menu-list">
@@ -94,6 +125,7 @@ export default class AddUnitJual extends Component{
                                 </div>
                                 <div className="lokasi-menu-list">
                                     <StyledDropZone onDrop={this.setFile} >{label}</StyledDropZone>
+                                    <img src={this.state.file}/>
                                 </div>
                                 <textarea className="big field w-input" name="deskripsi" placeholder="Deskripsi" required="required" onChange={(e) => this.setState({description: e.target.value})}></textarea>
                                 <input className="button w-button" type="submit" value="Selanjutnya" onClick={this.handleSubmit} />                                  
